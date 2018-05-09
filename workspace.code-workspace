@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "GameClient"
+		},
+		{
+			"path": "GameServer"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

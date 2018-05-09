@@ -1,0 +1,15 @@
+language: node_js
+sudo: false
+node_js:
+  - "7"
+
+script:
+  - echo TODO
+
+deploy:
+  - provider: heroku
+    app: turbo-winner
+    api_key:
+      secure: ttbU6F8kp2j/8iOTLLmpLi9dYfQ7SvXoQw1yJQoY8sGHBMyk76Ue2SE1t+71dePvXZF1KCdYLkpNU/NpJ4piw2twDZUmtttbwhJG3fqMrMICytFkFPC2Vt74WkYasbQ/noYD2Oirx0BEALt7zrrYh1itiDI1PUt017wPzkFAvi1b42GmTKzJuykKXbMIeFDwRh1l9K1O5dKDuTalGsoKkI4S9tHz2JFABR0rjHZcjb4JpGKu6MmcsYc+ejGZJOJXwkqgGOsrgcoCBciGnvGHMDkrOJMI70XUbpck2+te/YrWNAL2VSyp1z4Qwo9MsHeRhCEHKb5wsDmDxEmhwanpYw//bQcoCtrioP0EWoRFpRZQtC/SVsXgFgNTda1rAaPBESaEfLpJ95WOwIDsGTmVZYOmKIZKH95lFAHuVRlJIr0VTqYSo5nTVC7dSc+vr76wkT/CNT4neZPnATRoRFpo0kwGstph0+dwe3nNgNH4D/NVN4K8iinyZ1dMWQaCXfZXhv3IjJT6lzpLZuWqq3MZyK0Z3/uLv6xBYawva4IiljNLkWY+6KYq1TFKVrCNovc+N6xsHSg+E2MNMNI1jD2DQv7KY7OPKwzPwehCE/smqKde6MNvA4n4jZLjkBiV/2obJnGY06h3uUk+vpiCrLuq+bxK3OeHj6WrZ9J84qiWdUI=
+    skip_cleanup: true
+    on: master
