@@ -45,9 +45,7 @@
         "jwt-decode": "^2.2.0",
         "lodash.clonedeep": "^4.5.0",
         "mongodb": "^3.0.2",
-        "socket.io": "^2.0.4"
-    },
-    "devDependencies": {
+        "socket.io": "^2.0.4",
         "typescript": "^2.8.3"
     }
 }
