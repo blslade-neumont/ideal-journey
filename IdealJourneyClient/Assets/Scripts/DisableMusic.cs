@@ -24,18 +24,18 @@ public class DisableMusic : MonoBehaviour
     void Awake()
     {
         myToggle = GetComponent<Toggle>();
-        myToggle.isOn = !AudioHelper.BGMEnabled;
+        myToggle.isOn = AudioHelper.BGMEnabled;
     }
 
     void OnDisable()
     {
-        AudioHelper.BGMEnabled = !myToggle.isOn;
+        AudioHelper.BGMEnabled = myToggle.isOn;
         if (m_optionsSrc != null) { m_optionsSrc.enabled = AudioHelper.BGMEnabled; }
     }
 
     public void OnToggleMe()
     {
-        AudioHelper.BGMEnabled = !myToggle.isOn;
+        AudioHelper.BGMEnabled = myToggle.isOn;
         if (m_optionsSrc != null) { m_optionsSrc.enabled = AudioHelper.BGMEnabled; }
     }
 }
