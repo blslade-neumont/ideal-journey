@@ -15,27 +15,6 @@ public class TestAccel : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        Vector3 dir = Vector3.zero;
-        dir.x = -Input.acceleration.y;
-        dir.z = Input.acceleration.x;
-        AccelerationEvent[] events = Input.accelerationEvents;
-
-        foreach (var item in events)
-        {
-            if (item.acceleration.ToString() != Vector3.back.ToString())
-            {
-                Debug.Log("Start");
-                m_text.text = item.acceleration.ToString();
-
-                Debug.Log("End");
-            }
-        }
-        if (dir.sqrMagnitude > 1)
-            dir.Normalize();
-        //Debug.Log(dir.x);
-        //Debug.Log(dir.z);
-        dir *= Time.deltaTime;
-        transform.Translate(dir * speed);
-
+        m_text.text = Input.acceleration.ToString();
     }
 }
