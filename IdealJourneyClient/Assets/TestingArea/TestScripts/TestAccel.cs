@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class TestAccel : MonoBehaviour {
 
-    private float speed = 1;
     private Text m_text;
 
     private void Start()
