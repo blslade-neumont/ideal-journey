@@ -4,16 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SceneMover : MonoBehaviour
+public class SceneMover : MenuControlsBase
 {
-    private WaitForSeconds wait = new WaitForSeconds(0.25f);
-
-    private IEnumerator LoadDelayed(string name)
-    {
-        yield return wait;
-        SceneManager.LoadScene(name);
-    }
-
     public void MoveToTitle()
     {
         KeepTitleMusic();
@@ -44,27 +36,20 @@ public class SceneMover : MonoBehaviour
         StartCoroutine(LoadDelayed(SceneNames.GAME));
     }
 
-    private void KeepTitleMusic()
-    {
-        GameObject titleMusic = GameObject.FindGameObjectWithTag(Tags.TITLE_MUSIC);
-        if (titleMusic != null) { DontDestroyOnLoad(titleMusic); }
-    }
-
-    private void DontKeepTitleMusic()
-    {
-        GameObject titleMusic = GameObject.FindGameObjectWithTag(Tags.TITLE_MUSIC);
-        if (titleMusic != null) { Destroy(titleMusic); }
-    }
-
     public void QuitGame()
     {
         StartCoroutine(QuitDelayed());
     }
 
+    public void Logout()
+    {
+        KeepTitleMusic();
+        StartCoroutine(LoadDelayed(SceneNames.AUTH));
+    }
+
     private IEnumerator QuitDelayed()
     {
-        yield return wait;
         Debug.Log("Quitting");
-        Application.Quit();
+        return InvokeDelayed(() => Application.Quit());
     }
 }

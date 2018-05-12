@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class SceneNames
 {
+    public static readonly string AUTH = "LoginScene";
     public static readonly string TITLE = "TitleScene";
     public static readonly string END = "EndScene";
     public static readonly string OPTIONS = "OptionsScene";
