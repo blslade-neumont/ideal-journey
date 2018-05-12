@@ -732,43 +732,24 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114353512219588826, guid: 298b10dd7b6ef41459fe236ad94e65a5,
+    - target: {fileID: 114779971476851538, guid: 298b10dd7b6ef41459fe236ad94e65a5,
         type: 2}
-      propertyPath: m_Text
-      value: "Log In\t"
-      objectReference: {fileID: 0}
-    - target: {fileID: 114033267343359820, guid: 298b10dd7b6ef41459fe236ad94e65a5,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      propertyPath: txtEmail
       value: 
-      objectReference: {fileID: 1453642948}
-    - target: {fileID: 114033267343359820, guid: 298b10dd7b6ef41459fe236ad94e65a5,
+      objectReference: {fileID: 240255762}
+    - target: {fileID: 114779971476851538, guid: 298b10dd7b6ef41459fe236ad94e65a5,
         type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LogIn
-      objectReference: {fileID: 0}
+      propertyPath: txtPassword
+      value: 
+      objectReference: {fileID: 854430689}
+    - target: {fileID: 114779971476851538, guid: 298b10dd7b6ef41459fe236ad94e65a5,
+        type: 2}
+      propertyPath: errorText
+      value: 
+      objectReference: {fileID: 850764032}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 298b10dd7b6ef41459fe236ad94e65a5, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1453642947 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1760356902022040, guid: 298b10dd7b6ef41459fe236ad94e65a5,
-    type: 2}
-  m_PrefabInternal: {fileID: 1453642946}
---- !u!114 &1453642948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1453642947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dab622d0cf5ee3d4b9a96add297d5367, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  txtEmail: {fileID: 240255762}
-  txtPassword: {fileID: 854430689}
-  errorText: {fileID: 850764032}
 --- !u!1 &1797206671
 GameObject:
   m_ObjectHideFlags: 0
