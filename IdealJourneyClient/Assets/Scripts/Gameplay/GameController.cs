@@ -20,13 +20,13 @@ public class GameController : MonoBehaviour
 
     private GameCommand[] m_commands;
     private MyTimer       m_timer;
-    private int           m_turnCount = 0;
     private int           m_currentCommandIndex = -1;
     private System.Random m_randGen = new System.Random();
 
     private SceneMover m_sceneMover;
 
     public bool IsWaitingForAction { get; private set; }
+    public int CompletedActions { get; private set; }
 
     public GameCommand CurrentCommand
     {
@@ -93,7 +93,6 @@ public class GameController : MonoBehaviour
     private void InitializeNewCommand()
     {
         CurrentCommand.Begin();
-        Debug.Log(CurrentCommand.AsText());
     }
 
     private void BeginBreak()
@@ -130,13 +129,13 @@ public class GameController : MonoBehaviour
 
     private void OnActionCompletedSuccessfully()
     {
-        ++m_turnCount;
+        ++CompletedActions;
         BeginBreak();
     }
 
     private float CalculateCompletionTime()
     {
-        float t = Mathf.Clamp01(m_turnCount / (float)m_decay);
+        float t = Mathf.Clamp01(CompletedActions / (float)m_decay);
         return Mathf.Lerp(m_maximumTimeToCompleteAction, m_minimumTimeToCompleteAction, QuadraticOut(t));
     }
 
