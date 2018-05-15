@@ -213,6 +213,7 @@ MonoBehaviour:
   m_currentTimeTilNextTurn: 2
   m_minimumTimeTilNextTurn: 0.5
   m_maximumTimeTilNextTurn: 2
+  m_debugMode: 1
 --- !u!114 &834446755
 MonoBehaviour:
   m_ObjectHideFlags: 0

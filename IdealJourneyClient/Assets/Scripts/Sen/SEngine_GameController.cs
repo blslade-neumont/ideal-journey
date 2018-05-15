@@ -34,6 +34,10 @@ public class SEngine_GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+        if (m_debugMode)
+        {
+            print("Game Start");
+        }
         // Get sibling components
         m_sceneMover = GetComponent<SceneMover>();
 
@@ -42,7 +46,12 @@ public class SEngine_GameController : MonoBehaviour {
         };
 
         GetRandomState();
-	}
+
+        if(m_debugMode)
+        {
+            print(m_commands[m_currentState] + " IT! Time to complete: [" + m_currentTimeToCompleteAction.ToString() + "].");
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -62,7 +71,7 @@ public class SEngine_GameController : MonoBehaviour {
 
                 if(m_debugMode)
                 {
-                    print(m_commands[m_currentState] + " IT!");
+                    print(m_commands[m_currentState] + " IT! Time to complete: [" + m_currentTimeToCompleteAction + "].");
                 }
             }
             return;
@@ -104,6 +113,12 @@ public class SEngine_GameController : MonoBehaviour {
     {
         float timeLeft = m_currentTimeToCompleteAction - m_timeElapsed;
         m_currentTimeTilNextTurn = Mathf.Clamp(timeLeft, m_minimumTimeTilNextTurn, m_maximumTimeTilNextTurn);
+
+        if (m_debugMode)
+        {
+            print("Action took [" + m_timeElapsed.ToString() + "] to complete.");
+            print("Action Complete; Waiting out timer [" + m_currentTimeTilNextTurn.ToString() +" seconds].");
+        }
     }
 
     /// <summary>
@@ -115,20 +130,30 @@ public class SEngine_GameController : MonoBehaviour {
         // needs implementation
 
         // If action succeeded, return true
-        if(Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             return true;
         }
         return false;
     }
 
+    bool first = true;
     private void GetRandomState()
     {
         m_currentState = 0;
+
+        if (m_debugMode)
+        {
+            print("Next task: [" + m_commands[m_currentState] + "].");
+        } 
     }
 
     private void EndGame()
     {
+        if(m_debugMode)
+        {
+            print("Game Ending");
+        }
         m_sceneMover.MoveToEnd();
     }
 }
