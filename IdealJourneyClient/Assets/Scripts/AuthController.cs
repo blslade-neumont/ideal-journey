@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-#pragma warning disable CS0649
+#pragma warning disable 0649
 
 [RequireComponent(typeof(Button))]
 public class AuthController : MenuControlsBase
