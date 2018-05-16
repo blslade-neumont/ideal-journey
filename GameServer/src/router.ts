@@ -40,10 +40,15 @@ export function initializeRoutesAndListen(port: number): Promise<Server> {
             res.status(200).json(topScores);
         });
         
-        app.post('/api/register', async (req: Request, res: Response) => {
+        app.post('/register', async (req: Request, res: Response) => {
             let username: string = req.body.username;
             let password: string = req.body.password;
-            res.status(500).send(`Hit /api/register with username: "${username}" and password: "${password}"`);
+            if (username === 'abc' && password === '123') {
+                res.status(200).render('account-creation-successful', { title: 'Registration Successful', username: username });
+            }
+            else {
+                res.status(200).render('register', { title: 'Register', username: username, error: 'Failed to register. Try again later.' });
+            }
         });
         
         const server = app.listen(port, (err: any, result: any) => {
