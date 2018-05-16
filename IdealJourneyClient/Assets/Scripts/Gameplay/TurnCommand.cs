@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class TurnCommand : GameCommand
 {
+    private Gyroscope m_gyro;
+    private Vector3 m_startUp;
+    private const float TOLERANCE = 45;
+
     public override void Begin()
     {
-        Debug.Log("Initializing turn command. TODO: Set state here!?!?! Do nothing on purpose???.");
+        m_gyro = Input.gyro;
+        m_startUp = (m_gyro.attitude * Vector3.up).normalized;
     }
 
     public override bool IsComplete()
     {
-        return Input.GetKeyUp(KeyCode.Space) || Input.touches.Length> 0; // TODO: REPLACE THIS
+        Vector3 currentUp = (m_gyro.attitude * Vector3.up).normalized;
+        return Vector3.Dot(currentUp, m_startUp) < 0 || base.IsComplete();
     }
 
     public override string AsText()

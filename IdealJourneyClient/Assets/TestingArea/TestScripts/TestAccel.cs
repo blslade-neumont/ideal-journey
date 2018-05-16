@@ -14,6 +14,6 @@ public class TestAccel : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        m_text.text = Input.acceleration.ToString();
+        m_text.text = Input.gyro.userAcceleration.ToString();
     }
 }
