@@ -11,7 +11,7 @@ public abstract class GameCommand
 
     public virtual bool IsComplete()
     {
-        return false;
+        return Input.GetKeyUp(KeyCode.Space);
     }
 
     public virtual string AsText()

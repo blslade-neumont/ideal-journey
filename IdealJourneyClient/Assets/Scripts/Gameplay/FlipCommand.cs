@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class FlipCommand : GameCommand
 {
+    private Gyroscope m_gyro;
+    private Vector3 m_target;
+    private const float TOLERANCE = 45;
+
     public override void Begin()
     {
-        Debug.Log("Initializing flip command. TODO: Set state here!?!?! Do nothing on purpose???.");
+        m_gyro = Input.gyro;
+        m_target = (m_gyro.attitude * Vector3.back).normalized;
     }
 
     public override bool IsComplete()
     {
-        return Input.GetKeyUp(KeyCode.Space) || Input.touches.Length> 0; // TODO: REPLACE THIS
+        Vector3 currentForward = (m_gyro.attitude * Vector3.forward).normalized;
+        float angle = Mathf.Acos(Vector3.Dot(m_target, currentForward));
+        return angle < Mathf.Deg2Rad * TOLERANCE || base.IsComplete();
     }
 
     public override string AsText()
