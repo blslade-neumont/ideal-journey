@@ -4,14 +4,27 @@ using UnityEngine;
 
 public class SwipeCommand : GameCommand
 {
+
+    private Vector2 m_initTouchPos;
+    private float m_sqrMagTolerance; // NOT CONST, can change based on screen dpi
+
     public override void Begin()
     {
-        Debug.Log("Initializing swipe command. TODO: Set state here!?!?! Do nothing on purpose???.");
+        m_initTouchPos = Vector2.zero;
+        m_sqrMagTolerance = Screen.dpi;
+        m_sqrMagTolerance *= m_sqrMagTolerance;
     }
 
     public override bool IsComplete()
     {
-        return Input.GetKeyUp(KeyCode.Space) || Input.touches.Length> 0; // TODO: REPLACE THIS
+        if (Input.touchCount == 0) return false;
+        Touch currentTouch = Input.touches[0];
+        if (currentTouch.phase == TouchPhase.Began)
+        {
+            m_initTouchPos = currentTouch.position;
+        }
+        return (currentTouch.phase == TouchPhase.Ended && (currentTouch.position - m_initTouchPos).sqrMagnitude > m_sqrMagTolerance)
+            || base.IsComplete();
     }
 
     public override string AsText()

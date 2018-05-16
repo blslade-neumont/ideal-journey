@@ -52,8 +52,8 @@ public class GameController : MonoBehaviour
             //new TapCommand(),
             //new ShakeCommand(),
             //new FlipCommand(),
-            new TurnCommand(),
-            //new SwipeCommand()
+            //new TurnCommand(),
+            new SwipeCommand()
         };
     }
 
