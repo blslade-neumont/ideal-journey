@@ -24,28 +24,18 @@ public class TestShake : MonoBehaviour {
 
     void Update()
     {
-        Vector3 acceleration = Input.gyro.userAcceleration;
-        lowPassValue = Vector3.Lerp(lowPassValue, acceleration, lowPassFilterFactor);
-        Vector3 deltaAcceleration = acceleration - lowPassValue;
-
-        if (deltaAcceleration.sqrMagnitude >= shakeDetectionThreshold)
+        if (m_listen)
         {
-            m_text.text = "Did a shake";
-            Debug.Log("Shake event detected at time " + Time.time);
-            Debug.Log(deltaAcceleration);
-        }
-        //if (m_listen)
-        //{
-        //    Vector3 acceleration = Input.gyro.userAcceleration;
-        //    lowPassValue = Vector3.Lerp(lowPassValue, acceleration, lowPassFilterFactor);
-        //    Vector3 deltaAcceleration = acceleration - lowPassValue;
+            Vector3 acceleration = Input.gyro.userAcceleration;
+            lowPassValue = Vector3.Lerp(lowPassValue, acceleration, lowPassFilterFactor);
+            Vector3 deltaAcceleration = acceleration - lowPassValue;
 
-        //    if (deltaAcceleration.sqrMagnitude >= shakeDetectionThreshold)
-        //    {
-        //        m_text.text = "Did a shake";
-        //        Debug.Log("Shake event detected at time " + Time.time);
-        //    }
-        //}
+            if (deltaAcceleration.sqrMagnitude >= shakeDetectionThreshold)
+            {
+                m_text.text = "Did a shake";
+                Debug.Log("Shake event detected at time " + Time.time);
+            }
+        }
     }
 
     public void Shake()
