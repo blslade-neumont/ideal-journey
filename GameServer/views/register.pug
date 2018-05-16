@@ -1,0 +1,13 @@
+extends layout.pug
+
+block content
+    p(class="lead") Enter your username and password to register.
+    form(method="post", action="/api/register")
+        div(class="form-group")
+            label(for="username") Username
+            input(type="text", class="form-control", autofocus="autofocus", name="username")
+        div(class="form-group")
+            label(for="password") Password
+            input(type="password", class="form-control", name="password")
+        div(class="form-group")
+            button(type="submit", class="btn btn-primary") Submit

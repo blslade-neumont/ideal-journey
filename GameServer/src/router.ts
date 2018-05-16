@@ -8,7 +8,7 @@ import cookieParser = require('cookie-parser');
 import bodyParser = require('body-parser')
 import { allowAllOrigins } from './util/allow-all-origins';
 import { parseUser } from './util/parse-user';
-import { renderPage } from './render/render-page';
+import path = require('path');
 
 export function initializeRoutesAndListen(port: number): Promise<Server> {
     return new Promise((resolve, reject) => {
@@ -23,29 +23,15 @@ export function initializeRoutesAndListen(port: number): Promise<Server> {
             allowAllOrigins
         );
         
+        app.set('view engine', 'pug');
+        app.set('views', path.join(__dirname, '../views'));
+        
         app.get('/', (req, res) => {
-            res.status(200).send(`You've reached the api server!`);
+            res.status(200).render('index', { title: 'Homepage' });
         });
         
         app.get('/register', (req, res) => {
-            res.status(200).send(renderPage('Register', `
-<p>
-    Enter your username and password to register.
-</p>
-<form method="post" action="/api/register">
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" autofocus="autofocus" name="username" />
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" />
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>
-            `.trim()));
+            res.status(200).render('register', { title: 'Register' });
         });
         
         app.get('/api/highscores', async (req: Request, res: Response) => {
