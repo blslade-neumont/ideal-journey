@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SceneMover))]
+[RequireComponent(typeof(SceneMover), typeof(AudioSource))]
 public class GameController : MonoBehaviour
 {
     [Header("Configuration")]
@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
     private System.Random m_randGen = new System.Random();
 
     private SceneMover m_sceneMover;
+    private AudioSource m_successSFX;
 
     public bool IsWaitingForAction { get; private set; }
     public int CompletedActions { get; private set; }
@@ -59,6 +60,7 @@ public class GameController : MonoBehaviour
 
     private void GetSiblingComponents()
     {
+        m_successSFX = GetComponent<AudioSource>();
         m_sceneMover = GetComponent<SceneMover>();
     }
 
@@ -130,7 +132,14 @@ public class GameController : MonoBehaviour
     private void OnActionCompletedSuccessfully()
     {
         ++CompletedActions;
+        NotifySuccessToUser();
         BeginBreak();
+    }
+
+    private void NotifySuccessToUser()
+    {
+        m_successSFX.Play();
+        Handheld.Vibrate();
     }
 
     private float CalculateCompletionTime()

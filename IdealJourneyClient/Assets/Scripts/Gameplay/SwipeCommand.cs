@@ -17,7 +17,7 @@ public class SwipeCommand : GameCommand
 
     public override bool IsComplete()
     {
-        if (Input.touchCount == 0) return false;
+        if (Input.touchCount == 0) return base.IsComplete();
         Touch currentTouch = Input.touches[0];
         if (currentTouch.phase == TouchPhase.Began)
         {
