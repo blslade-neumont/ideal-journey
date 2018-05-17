@@ -49,11 +49,11 @@ public class GameController : MonoBehaviour
     {
         m_commands = new GameCommand[]
         {
-            //new TapCommand(),
+            new TapCommand(),
             new ShakeCommand(),
-            //new FlipCommand(),
-            //new TurnCommand(),
-            //new SwipeCommand()
+            new FlipCommand(),
+            new TurnCommand(),
+            new SwipeCommand()
         };
     }
 
