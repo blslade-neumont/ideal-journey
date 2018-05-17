@@ -3,3 +3,6 @@
 dist
 config/local-*
 config/**/local-*
+
+yarn-error.log
+

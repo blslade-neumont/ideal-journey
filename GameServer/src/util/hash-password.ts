@@ -1,7 +1,5 @@
-import bcrypt = require('bcrypt');
+import bcrypt = require('bcrypt-nodejs');
 
-const SALT_PASSWORD_ROUNDS = 12;
-
-export function hashPassword(password: string) {
-    return bcrypt.hash(password, SALT_PASSWORD_ROUNDS);
+export async function hashPassword(password: string): Promise<string> {
+    return bcrypt.hashSync(password);
 }
