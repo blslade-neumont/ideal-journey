@@ -3,18 +3,18 @@ import cloneDeep = require('lodash.clonedeep');
 import * as jwt from 'jsonwebtoken';
 import { config } from '../config';
 
-const EXPIRES_IN_DAYS = 2;
+const EXPIRES_IN_DAYS = 365;
 
 export interface User {
     _id: string;
-    displayName: string;
+    username: string;
+    passwordHash: string;
     bestScore: number;
 };
 
 export function sanitizeUser(user: User): Partial<User> {
     let clone = cloneDeep(user);
-    //TODO: delete properties that should not be sent to the client
-    //(Ex: password hashes)
+    delete clone.passwordHash;
     return clone;
 }
 
@@ -26,6 +26,6 @@ export function createAuthToken(user: User): string {
 }
 
 export let Users: Collection<User>;
-export function provideUsers(users: Collection<User>) {
+export async function provideUsers(users: Collection<User>) {
     Users = users;
 }

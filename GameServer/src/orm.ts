@@ -14,8 +14,10 @@ export function initializeDatabase(): Promise<boolean> {
             
             let allCollectionsTasks: AsyncFunction<any, any>[] = provideFunctions.map(([name, provideFn]) => {
                 return (next: CallbackT) => db.collection(name, (err, collection) => {
-                    provideFn(collection);
-                    next(err, collection);
+                    if (err) return void(next(err));
+                    provideFn(collection)
+                        .then(() => next(null, collection))
+                        .catch(next);
                 });
             });
             

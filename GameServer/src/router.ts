@@ -8,6 +8,8 @@ import cookieParser = require('cookie-parser');
 import bodyParser = require('body-parser')
 import { allowAllOrigins } from './util/allow-all-origins';
 import { parseUser } from './util/parse-user';
+import { registerUser } from './util/register-user';
+import { loginAsUser } from './util/login-as-user';
 import path = require('path');
 
 export function initializeRoutesAndListen(port: number): Promise<Server> {
@@ -30,25 +32,38 @@ export function initializeRoutesAndListen(port: number): Promise<Server> {
             res.status(200).render('index', { title: 'Homepage' });
         });
         
-        app.get('/register', (req, res) => {
-            res.status(200).render('register', { title: 'Register' });
+        app.post('/login', async (req: Request, res: Response) => {
+            let username: string = req.body.username;
+            let password: string = req.body.password;
+            try {
+                let authToken = await loginAsUser(username, password);
+                res.status(200).send({ token: authToken, error: null });
+            }
+            catch (e) {
+                res.status(403).json({ token: null, error: 'Failed to log in' });
+            }
         });
         
-        app.get('/api/highscores', async (req: Request, res: Response) => {
-            let topUsers = await Users.find().sort('bestScore', -1).limit(10).toArray();
-            let topScores = topUsers.map(user => ({ displayName: user.displayName, bestScore: user.bestScore }));
-            res.status(200).json(topScores);
+        app.get('/register', (req, res) => {
+            res.status(200).render('register', { title: 'Register' });
         });
         
         app.post('/register', async (req: Request, res: Response) => {
             let username: string = req.body.username;
             let password: string = req.body.password;
-            if (username === 'abc' && password === '123') {
+            try {
+                let user = await registerUser(username, password);
                 res.status(200).render('account-creation-successful', { title: 'Registration Successful', username: username });
             }
-            else {
-                res.status(200).render('register', { title: 'Register', username: username, error: 'Failed to register. Try again later.' });
+            catch (e) {
+                res.status(200).render('register', { title: 'Register', username: username, error: 'Failed to register. Check your username and password, then try again.' });
             }
+        });
+        
+        app.get('/api/highscores', async (req: Request, res: Response) => {
+            let topUsers = await Users.find().sort('bestScore', -1).limit(10).toArray();
+            let topScores = topUsers.map(user => ({ username: user.username, bestScore: user.bestScore }));
+            res.status(200).json(topScores);
         });
         
         const server = app.listen(port, (err: any, result: any) => {
