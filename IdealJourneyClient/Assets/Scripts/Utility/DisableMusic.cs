@@ -14,7 +14,8 @@ public class DisableMusic : MonoBehaviour
         {
             if (m_titleSrc == null)
             {
-                m_titleSrc = GameObject.FindGameObjectWithTag(Tags.TITLE_MUSIC).GetComponent<AudioSource>();
+                GameObject obj = GameObject.FindGameObjectWithTag(Tags.TITLE_MUSIC);
+                m_titleSrc = obj == null ? null : obj.GetComponent<AudioSource>();
             }
 
             return m_titleSrc;
@@ -24,12 +25,14 @@ public class DisableMusic : MonoBehaviour
     void Awake()
     {
         myToggle = GetComponent<Toggle>();
+        AudioHelper.BGMEnabled = PersistToDeviceHelper.IsBackgroundMusicSavedOn();
         myToggle.isOn = AudioHelper.BGMEnabled;
     }
 
     void OnDisable()
     {
         AudioHelper.BGMEnabled = myToggle.isOn;
+        PersistToDeviceHelper.SaveBackgroundMusicOption(AudioHelper.BGMEnabled);
         if (m_optionsSrc != null) { m_optionsSrc.enabled = AudioHelper.BGMEnabled; }
     }
 

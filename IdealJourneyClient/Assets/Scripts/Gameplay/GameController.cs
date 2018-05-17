@@ -139,7 +139,7 @@ public class GameController : MonoBehaviour
     private void NotifySuccessToUser()
     {
         m_successSFX.Play();
-        Handheld.Vibrate();
+        VibrateHelper.Vibrate();
     }
 
     private float CalculateCompletionTime()
