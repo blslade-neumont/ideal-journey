@@ -11,6 +11,7 @@ TagManager:
   - TurnSFX
   - SwipeSFX
   - ShakeSFX
+  - BackgroundObject
   layers:
   - Default
   - TransparentFX

@@ -30,4 +30,10 @@ public class MenuControlsBase : MonoBehaviour
         GameObject titleMusic = GameObject.FindGameObjectWithTag(Tags.TITLE_MUSIC);
         if (titleMusic != null) { Destroy(titleMusic); }
     }
+
+    protected void PersistBackground()
+    {
+        GameObject backgroundObject = GameObject.FindGameObjectWithTag(Tags.BACKGROUND_OBJECT);
+        if (backgroundObject != null) { DontDestroyOnLoad(backgroundObject); }
+    }
 }
