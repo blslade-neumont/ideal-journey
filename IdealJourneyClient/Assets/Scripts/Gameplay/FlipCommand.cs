@@ -25,4 +25,10 @@ public class FlipCommand : GameCommand
     {
         return "FLIP!!!";
     }
+
+    public override void PlaySFX()
+    {
+        GetCacheSFX(Tags.FLIP_SFX);
+        base.PlaySFX();
+    }
 }

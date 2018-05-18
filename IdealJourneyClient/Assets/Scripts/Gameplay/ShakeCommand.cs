@@ -33,4 +33,10 @@ public class ShakeCommand : GameCommand
     {
         return "SHAKE!!!";
     }
+
+    public override void PlaySFX()
+    {
+        GetCacheSFX(Tags.SHAKE_SFX);
+        base.PlaySFX();
+    }
 }

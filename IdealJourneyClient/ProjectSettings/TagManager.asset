@@ -6,6 +6,11 @@ TagManager:
   tags:
   - TitleMusic
   - ScreenOLock
+  - FlipSFX
+  - TapSFX
+  - TurnSFX
+  - SwipeSFX
+  - ShakeSFX
   layers:
   - Default
   - TransparentFX

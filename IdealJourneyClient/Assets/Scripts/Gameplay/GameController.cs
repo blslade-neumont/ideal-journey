@@ -83,6 +83,12 @@ public class GameController : MonoBehaviour
     {
         SetupActionState();
         SetupActionTimer();
+        NotifyActionToDoToUser();
+    }
+
+    private void NotifyActionToDoToUser()
+    {
+        CurrentCommand.PlaySFX();
     }
 
     private void SetupActionState()

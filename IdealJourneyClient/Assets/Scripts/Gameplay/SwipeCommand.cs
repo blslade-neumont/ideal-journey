@@ -31,4 +31,10 @@ public class SwipeCommand : GameCommand
     {
         return "SWIPE!!!";
     }
+
+    public override void PlaySFX()
+    {
+        GetCacheSFX(Tags.SWIPE_SFX);
+        base.PlaySFX();
+    }
 }

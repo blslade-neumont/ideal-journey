@@ -4,20 +4,30 @@ using UnityEngine;
 
 public abstract class GameCommand
 {
-    public virtual void Begin()
-    {
-        Debug.Log("Beginning GameCommand.");
-    }
+    protected AudioSource m_sfx;
 
     public virtual bool IsComplete()
     {
         return Input.GetKeyUp(KeyCode.Space);
     }
 
-    public virtual string AsText()
+    public abstract void Begin();
+    public abstract string AsText();
+
+    public virtual void PlaySFX()
     {
-        return "New GameCommand";
+        if (m_sfx != null)
+        {
+            m_sfx.Play();
+        }
     }
 
-    // TODO: Get SFX???
+    protected void GetCacheSFX(string tag)
+    {
+        if (m_sfx == null)
+        {
+            GameObject obj = GameObject.FindGameObjectWithTag(tag);
+            m_sfx = obj == null ? null : obj.GetComponent<AudioSource>();
+        }
+    }
 }
