@@ -578,8 +578,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08341759d148fa54fbb0856cf108f193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_decay: 5
-  m_minimumTimeToCompleteAction: 5
+  m_decay: 50
+  m_minimumTimeToCompleteAction: 3
   m_maximumTimeToCompleteAction: 10
   m_minimumTimeTilNextTurn: 0.5
   m_maximumTimeTilNextTurn: 2
