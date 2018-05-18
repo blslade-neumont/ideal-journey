@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/TestingArea/TestScenes/MVTestScene.unity
     guid: 7201e8805e79b904dbd9745fb833976f
+  - enabled: 0
+    path: Assets/Scenes/Sen/Sen_SceneA.unity
+    guid: 4a84682c775247149b1a189358fde16f
+  - enabled: 0
+    path: Assets/Scenes/Sen/Sen_SceneB.unity
+    guid: 925777f8081b5404f900728ea1494e15
   m_configObjects: {}
