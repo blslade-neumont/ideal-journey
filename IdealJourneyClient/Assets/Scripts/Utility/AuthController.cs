@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -10,7 +13,7 @@ using UnityEngine.UI;
 public class AuthController : MenuControlsBase
 {
     [SerializeField]
-    private InputField txtEmail;
+    private InputField txtUsername;
     [SerializeField]
     private InputField txtPassword;
 
@@ -19,6 +22,9 @@ public class AuthController : MenuControlsBase
     [SerializeField]
     private Text errorText;
 
+    [SerializeField]
+    private string apiServerRoot = "https://ideal-journey.herokuapp.com/";
+
     private void Awake()
     {
         if (btnLogIn == null) btnLogIn = GetComponent<Button>();
@@ -26,24 +32,47 @@ public class AuthController : MenuControlsBase
 
     public void LogIn()
     {
-        var email = txtEmail.text;
+        var username = txtUsername.text;
         var password = txtPassword.text;
 
-        StartCoroutine(TryLogIn(email, password));
+        StartCoroutine(TryLogIn(username, password));
     }
 
-    public IEnumerator TryLogIn(string email, string password)
+    public void Register()
     {
-        txtEmail.enabled = false;
+        Application.OpenURL(apiServerRoot + "register");
+    }
+
+    public IEnumerator TryLogIn(string username, string password)
+    {
+        txtUsername.enabled = false;
         txtPassword.enabled = false;
         btnLogIn.enabled = false;
 
-        yield return new WaitForSeconds(.5f);
+        bool loggedIn = false;
+        var formFields = new Dictionary<string, string>();
+        formFields.Add("username", username);
+        formFields.Add("password", password);
+        using (var request = UnityWebRequest.Post(apiServerRoot + "login", formFields))
+        {
+            yield return request.SendWebRequest();
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.Log(request.error);
+            }
+            else
+            {
+                var jwt = request.downloadHandler.text;
+                Debug.Log(jwt);
+                //TODO: persist JWT
+                loggedIn = true;
+            }
+        }
 
-        if (email != "abc" || password != "123")
+        if (!loggedIn)
         {
             errorText.text = "Failed to log in. Try again.";
-            txtEmail.enabled = true;
+            txtUsername.enabled = true;
             txtPassword.enabled = true;
             btnLogIn.enabled = true;
             yield break;
