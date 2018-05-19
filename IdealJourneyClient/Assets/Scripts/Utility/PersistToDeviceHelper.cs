@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,9 +15,29 @@ public static class PersistToDeviceHelper
         return GetBooleanFromPlayerPrefs(Keys.VIBRATE_OPTION);
     }
 
+    public static bool IsSFXSavedOn()
+    {
+        return GetBooleanFromPlayerPrefs(Keys.SFX_OPTION);
+    }
+
+    public static bool IsVoiceSavedOn()
+    {
+        return GetBooleanFromPlayerPrefs(Keys.VOICE_OPTION);
+    }
+
     public static void SaveBackgroundMusicOption(bool value)
     {
         SaveBooleanToPlayerPrefs(Keys.BACKGROUND_MUSIC_OPTION, value);
+    }
+
+    public static void SaveSFXOption(bool SFXEnabled)
+    {
+        SaveBooleanToPlayerPrefs(Keys.SFX_OPTION, SFXEnabled);
+    }
+
+    public static void SaveVoiceOption(bool voiceEnabled)
+    {
+        SaveBooleanToPlayerPrefs(Keys.VOICE_OPTION, voiceEnabled);
     }
 
     public static bool IsBackgroundMusicSavedOn()

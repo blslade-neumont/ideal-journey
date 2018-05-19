@@ -26,9 +26,9 @@ public class FlipCommand : GameCommand
         return "FLIP!!!";
     }
 
-    public override void PlaySFX()
+    public override void PlayVoiceOverSFX()
     {
         GetCacheSFX(Tags.FLIP_SFX);
-        base.PlaySFX();
+        base.PlayVoiceOverSFX();
     }
 }

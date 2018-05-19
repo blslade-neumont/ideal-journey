@@ -14,11 +14,11 @@ public abstract class GameCommand
     public abstract void Begin();
     public abstract string AsText();
 
-    public virtual void PlaySFX()
+    public virtual void PlayVoiceOverSFX()
     {
         if (m_sfx != null)
         {
-            m_sfx.Play();
+            AudioHelper.PlayVoice(m_sfx);
         }
     }
 

@@ -888,33 +888,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114068843757976324, guid: 677e5046584ba4c46a7eda78759d6aa2,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: bdd5a1cc2682dc84d88f09be31683233,
-        type: 3}
-    - target: {fileID: 114015051031736028, guid: 677e5046584ba4c46a7eda78759d6aa2,
-        type: 2}
-      propertyPath: m_FontData.m_FontSize
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 114015051031736028, guid: 677e5046584ba4c46a7eda78759d6aa2,
-        type: 2}
-      propertyPath: m_FontData.m_MinSize
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114015051031736028, guid: 677e5046584ba4c46a7eda78759d6aa2,
-        type: 2}
-      propertyPath: m_FontData.m_FontStyle
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114015051031736028, guid: 677e5046584ba4c46a7eda78759d6aa2,
-        type: 2}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: 1c55ca00f84be454abaf1c52467708e9,
-        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 677e5046584ba4c46a7eda78759d6aa2, type: 2}
   m_IsPrefabParent: 0

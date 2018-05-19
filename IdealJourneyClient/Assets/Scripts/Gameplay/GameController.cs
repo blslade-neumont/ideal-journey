@@ -88,7 +88,7 @@ public class GameController : MonoBehaviour
 
     private void NotifyActionToDoToUser()
     {
-        CurrentCommand.PlaySFX();
+        CurrentCommand.PlayVoiceOverSFX();
     }
 
     private void SetupActionState()
@@ -144,7 +144,7 @@ public class GameController : MonoBehaviour
 
     private void NotifySuccessToUser()
     {
-        m_successSFX.Play();
+        AudioHelper.PlaySFX(m_successSFX);
         VibrateHelper.Vibrate();
     }
 

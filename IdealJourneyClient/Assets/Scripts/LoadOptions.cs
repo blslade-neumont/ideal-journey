@@ -8,6 +8,8 @@ public class LoadOptions : MonoBehaviour
     {
         AudioHelper.BGMEnabled = PersistToDeviceHelper.IsBackgroundMusicSavedOn();
         VibrateHelper.VibrateEnabled = PersistToDeviceHelper.IsVibrationSavedOn();
+        AudioHelper.SFXEnabled = PersistToDeviceHelper.IsSFXSavedOn();
+        AudioHelper.VoiceEnabled = PersistToDeviceHelper.IsVoiceSavedOn();
     }
 
 }

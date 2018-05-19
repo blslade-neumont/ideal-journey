@@ -25,9 +25,9 @@ public class TurnCommand : GameCommand
         return "TURN!!!";
     }
 
-    public override void PlaySFX()
+    public override void PlayVoiceOverSFX()
     {
         GetCacheSFX(Tags.TURN_SFX);
-        base.PlaySFX();
+        base.PlayVoiceOverSFX();
     }
 }

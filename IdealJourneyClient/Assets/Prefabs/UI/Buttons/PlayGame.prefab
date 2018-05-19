@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 114664411736324508}
   - component: {fileID: 114746527325304538}
   - component: {fileID: 82660696915037626}
+  - component: {fileID: 114081235386724184}
   m_Layer: 5
   m_Name: PlayGame
   m_TagString: Untagged
@@ -170,6 +171,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114081235386724184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1731366287482156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 843ecb81d07d91e46ae4620afc0b19bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114278769574584282
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -253,8 +265,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 82660696915037626}
-        m_MethodName: Play
+      - m_Target: {fileID: 114081235386724184}
+        m_MethodName: PlaySFX
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

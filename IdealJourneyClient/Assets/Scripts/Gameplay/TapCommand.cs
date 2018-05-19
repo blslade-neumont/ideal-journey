@@ -31,9 +31,9 @@ public class TapCommand : GameCommand
         return "TAP!!!";
     }
 
-    public override void PlaySFX()
+    public override void PlayVoiceOverSFX()
     {
         GetCacheSFX(Tags.TAP_SFX);
-        base.PlaySFX();
+        base.PlayVoiceOverSFX();
     }
 }
