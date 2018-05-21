@@ -12,13 +12,10 @@ public class ShakeCommand : GameCommand
     private float lowPassFilterFactor;
     private Vector3 lowPassValue;
 
-    private Vector3 m_firstValidDelta;
-
     public override void Begin()
     {
         lowPassFilterFactor = m_accelerometerUpdateInterval / m_lowPassKernelWidthInSeconds;
         lowPassValue = Vector3.zero;
-        m_firstValidDelta = Vector3.zero;
     }
 
     public override bool IsComplete()
