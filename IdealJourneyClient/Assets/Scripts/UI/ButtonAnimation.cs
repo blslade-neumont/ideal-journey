@@ -24,7 +24,7 @@ public class ButtonAnimation : MonoBehaviour {
         m_position = transform.position;
         
         // Set button location arbitrarily to the right
-        transform.position = new Vector3(700, m_position.y, m_position.z);
+        transform.position = new Vector3(Screen.width * 2, m_position.y, m_position.z);
     }
 
     bool firstActiveFrame = true;
