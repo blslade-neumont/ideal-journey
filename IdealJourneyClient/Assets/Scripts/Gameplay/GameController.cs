@@ -10,24 +10,46 @@ public class GameController : MonoBehaviour
     [Header("Internal Information")]
     [Header("Turn Duration Information")]
     [SerializeField] [Range(1, 100)] private int m_decay = 5;
-    [SerializeField] [Range(0.0f, 10.0f)] private float m_minimumTimeToCompleteAction   = 5.0f;
+    [SerializeField] [Range(0.0f, 10.0f)] private float m_minimumTimeToCompleteAction   = 2.0f;
     [SerializeField] [Range(0.0f, 10.0f)] private float m_maximumTimeToCompleteAction   = 10.0f;
 
     [Header("Turn Delay Information")]
-    [SerializeField] [Range(0.0f, 10.0f)] private float m_minimumTimeTilNextTurn        = 0.5f;
-    [SerializeField] [Range(0.0f, 10.0f)] private float m_maximumTimeTilNextTurn = 2.0f;
     [SerializeField] [Range(0.0f, 10.0f)] private float m_startBreakTime = 3.0f;
+    [SerializeField] [Range(0.0f, 10.0f)] private float m_alwaysTimeUntilNextTurn = 3.0f;
+    [SerializeField] [Range(0.0f, 3.0f)] private float m_minPitch = 0.75f;
+    [SerializeField] [Range(0.0f, 3.0f)] private float m_maxPitch = 1.5f;
+    [SerializeField] [Range(0.0f, 3.0f)] private float m_minUVSpeed = 0.1f;
+    [SerializeField] [Range(0.0f, 3.0f)] private float m_maxUVSpeed = 0.5f;
 
     private GameCommand[] m_commands;
     private MyTimer       m_timer;
     private int           m_currentCommandIndex = -1;
     private System.Random m_randGen = new System.Random();
+    private AudioSource[] m_sourcesToScale;
 
     private SceneMover m_sceneMover;
     private AudioSource m_successSFX;
+    private MyUVScroll m_uvScroll;
 
     public bool IsWaitingForAction { get; private set; }
     public int CompletedActions { get; private set; }
+    private float CurrentLerpValue
+    {
+        get
+        {
+            return QuadraticOut(Mathf.Clamp01(CompletedActions / (float)m_decay));
+        }
+    }
+
+    private float m_lastCompletedAtPercent = 0.0f;
+    public float FillAmount
+    {
+        get
+        {
+            return IsWaitingForAction ? m_timer.TimeRemaining / m_timer.CycleTime
+                                      : Mathf.Lerp(m_lastCompletedAtPercent, 1.0f, (m_timer.TimeElapsed / m_timer.CycleTime));
+        }
+    }
 
     public GameCommand CurrentCommand
     {
@@ -44,6 +66,32 @@ public class GameController : MonoBehaviour
         GetSiblingComponents();
         InitializeCommands();
         InitializeTimer();
+    }
+
+    private void Start()
+    {
+        GrabSourcesToScale(); // Needs to be in start so it can grab instantiated on awake audio sources
+        GrabUVScroll(); // needs to be in start because also instantiated
+        ScaleWithSpeed();
+    }
+
+    private void GrabUVScroll()
+    {
+        m_uvScroll = GameObject.FindGameObjectWithTag(Tags.BACKGROUND_OBJECT).GetComponent<MyUVScroll>();
+    }
+
+    private void GrabSourcesToScale()
+    {
+        m_sourcesToScale = new AudioSource[]
+        {
+            GameObject.FindGameObjectWithTag(Tags.GAMEPLAY_MUSIC).GetComponent<AudioSource>(),
+            GameObject.FindGameObjectWithTag(Tags.SHAKE_SFX).GetComponent<AudioSource>(),
+            GameObject.FindGameObjectWithTag(Tags.TURN_SFX).GetComponent<AudioSource>(),
+            GameObject.FindGameObjectWithTag(Tags.FLIP_SFX).GetComponent<AudioSource>(),
+            GameObject.FindGameObjectWithTag(Tags.SWIPE_SFX).GetComponent<AudioSource>(),
+            GameObject.FindGameObjectWithTag(Tags.TAP_SFX).GetComponent<AudioSource>(),
+            m_successSFX
+        };
     }
 
     private void InitializeCommands()
@@ -83,6 +131,7 @@ public class GameController : MonoBehaviour
     {
         SetupActionState();
         SetupActionTimer();
+        ScaleWithSpeed();
         NotifyActionToDoToUser();
     }
 
@@ -126,6 +175,16 @@ public class GameController : MonoBehaviour
         m_timer.OnCycle = OnBreakOver;
     }
 
+    private void ScaleWithSpeed()
+    {
+        m_uvScroll.uvAnimationRate.x = Mathf.Lerp(m_minUVSpeed, m_maxUVSpeed, CurrentLerpValue);
+        float newPitch = Mathf.Lerp(m_minPitch, m_maxPitch, CurrentLerpValue);
+        foreach (AudioSource audio in m_sourcesToScale)
+        {
+            audio.pitch = newPitch;
+        }
+    }
+
     private void Update ()
     {
         m_timer.TickTimer(Time.deltaTime);
@@ -138,6 +197,7 @@ public class GameController : MonoBehaviour
     private void OnActionCompletedSuccessfully()
     {
         ++CompletedActions;
+        m_lastCompletedAtPercent = m_timer.TimeRemaining / m_timer.CycleTime;
         NotifySuccessToUser();
         BeginBreak();
     }
@@ -150,13 +210,12 @@ public class GameController : MonoBehaviour
 
     private float CalculateCompletionTime()
     {
-        float t = Mathf.Clamp01(CompletedActions / (float)m_decay);
-        return Mathf.Lerp(m_maximumTimeToCompleteAction, m_minimumTimeToCompleteAction, QuadraticOut(t));
+        return Mathf.Lerp(m_maximumTimeToCompleteAction, m_minimumTimeToCompleteAction, CurrentLerpValue);
     }
 
     private float CalculateTimeUntilNextTurn()
     {
-        return Mathf.Clamp(m_timer.TimeRemaining, m_minimumTimeTilNextTurn, m_maximumTimeTilNextTurn);
+        return m_alwaysTimeUntilNextTurn;
     }
 
     private bool ActionIsComplete()

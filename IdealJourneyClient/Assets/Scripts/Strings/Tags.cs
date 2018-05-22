@@ -12,5 +12,6 @@ public static class Tags
     public static readonly string SWIPE_SFX = "SwipeSFX";
     public static readonly string TURN_SFX = "TurnSFX";
     public static readonly string BACKGROUND_OBJECT = "BackgroundObject";
+    public static readonly string GAMEPLAY_MUSIC = "GameplayMusic";
 
 }

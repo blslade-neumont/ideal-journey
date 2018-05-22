@@ -12,6 +12,7 @@ TagManager:
   - SwipeSFX
   - ShakeSFX
   - BackgroundObject
+  - GameplayMusic
   layers:
   - Default
   - TransparentFX
