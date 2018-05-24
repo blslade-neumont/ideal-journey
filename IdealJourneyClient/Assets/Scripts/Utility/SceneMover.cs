@@ -27,6 +27,13 @@ public class SceneMover : MenuControlsBase
         StartCoroutine(LoadDelayed(SceneNames.OPTIONS));
     }
 
+    public void MoveToCredits()
+    {
+        KeepTitleMusic();
+        PersistBackground();
+        StartCoroutine(LoadDelayed(SceneNames.CREDITS));
+    }
+
     public void MoveToHighScore()
     {
         KeepTitleMusic();
