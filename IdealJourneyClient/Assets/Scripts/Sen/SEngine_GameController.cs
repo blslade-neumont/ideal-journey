@@ -28,7 +28,6 @@ public class SEngine_GameController : MonoBehaviour
     private GameCommand[] m_commands;
     private MyTimer m_timer;
     private int m_currentCommandIndex = -1;
-    private System.Random m_randGen = new System.Random();
 
     private SceneMover m_sceneMover;
     private AudioSource m_successSFX;
@@ -101,7 +100,6 @@ public class SEngine_GameController : MonoBehaviour
         }
 
         // Calculate inverses
-        int max = frequencies.Sum();
 
         // Calculate percentages
         // Create frequency board (cached)

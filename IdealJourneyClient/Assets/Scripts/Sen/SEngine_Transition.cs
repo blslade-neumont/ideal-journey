@@ -38,13 +38,11 @@ public class SEngine_Transition : MonoBehaviour {
     private bool m_transition = false;
 
     // Private Sibling Components
-    private SceneMover m_sceneMover;
-    private AudioSource m_audioSource;
+    private AudioSource m_audioSource = null;
 
     void Start()
     {
         m_audioSource = GetComponent<AudioSource>();
-        m_sceneMover = GetComponent<SceneMover>();
 
         m_timer = m_time;
         m_size = 0.0f;
