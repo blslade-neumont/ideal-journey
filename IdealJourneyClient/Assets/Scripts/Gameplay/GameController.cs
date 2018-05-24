@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(SceneMover), typeof(AudioSource))]
@@ -21,7 +22,9 @@ public class GameController : MonoBehaviour
     [SerializeField] [Range(0.0f, 3.0f)] private float m_minUVSpeed = 0.1f;
     [SerializeField] [Range(0.0f, 3.0f)] private float m_maxUVSpeed = 0.5f;
 
+    private const int MAX_COMMAND_LOG_LENGTH = 5;
     private GameCommand[] m_commands;
+    private int[] m_previousCommandIndices;
     private MyTimer       m_timer;
     private int           m_currentCommandIndex = -1;
     private System.Random m_randGen = new System.Random();
@@ -65,6 +68,7 @@ public class GameController : MonoBehaviour
     {
         GetSiblingComponents();
         InitializeCommands();
+        InitializeCommandLog();
         InitializeTimer();
     }
 
@@ -104,6 +108,15 @@ public class GameController : MonoBehaviour
             new TurnCommand(),
             new SwipeCommand()
         };
+    }
+
+    private void InitializeCommandLog()
+    {
+        m_previousCommandIndices = new int[MAX_COMMAND_LOG_LENGTH];
+        for (int i = 0; i < m_previousCommandIndices.Length; ++i)
+        {
+            m_previousCommandIndices[i] = m_randGen.Next(m_commands.Length);
+        }
     }
 
     private void GetSiblingComponents()
@@ -225,7 +238,53 @@ public class GameController : MonoBehaviour
 
     private void PickNextCommand()
     {
-        m_currentCommandIndex = m_randGen.Next(m_commands.Length);
+        if (m_commands.Length == 0) { Debug.LogError("ERROR: No commands to pick from!"); }
+        else if (m_commands.Length == 1) { m_currentCommandIndex = 0; }
+        else
+        {
+            float[] workingArray = new float[m_commands.Length];
+            const float MIN = 1.0f;
+            for (int i = 0; i < workingArray.Length; ++i)
+            {
+                workingArray[i] = MIN + m_previousCommandIndices.Count(n => n == i);
+            }
+
+            float sum = workingArray.Sum();
+            for (int i = 0; i < workingArray.Length; ++i)
+            {
+                workingArray[i] = sum - workingArray[i];
+            }
+
+            sum = workingArray.Sum();
+            for (int i = 0; i < workingArray.Length; ++i)
+            {
+                workingArray[i] /= sum;
+            }
+
+            for (int i = 1; i < workingArray.Length; ++i)
+            {
+                workingArray[i] = workingArray[i - 1] + workingArray[i];
+            }
+
+            float choice = (float)m_randGen.NextDouble();
+            int chosenIndex = m_commands.Length - 1;
+
+            for (int i = chosenIndex; i >= 0; --i)
+            {
+                if (choice <= workingArray[i])
+                {
+                    chosenIndex = i;
+                }
+            }
+
+            m_currentCommandIndex = chosenIndex;
+
+            for (int x = MAX_COMMAND_LOG_LENGTH - 2; x > -1; --x)
+            {
+                m_previousCommandIndices[x + 1] = m_previousCommandIndices[x];
+            }
+            m_previousCommandIndices[0] = m_currentCommandIndex;
+        }
     }
 
     private void EndGame()
