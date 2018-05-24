@@ -1,5 +1,5 @@
 import { hashPassword } from "./hash-password";
-import { User, Users, createAuthToken } from "../models/user";
+import { User, Users, createAuthToken, sanitizeUser } from "../models/user";
 import bcrypt = require('bcrypt-nodejs');
 
 export async function loginAsUser(username: string, password: string): Promise<string> {
@@ -16,5 +16,6 @@ export async function loginAsUser(username: string, password: string): Promise<s
     if (!samePassword) throw new Error(`Failed to login as ${username}`);
     
     let authToken = createAuthToken(user);
-    return authToken;
+    let sanitizedUser = JSON.parse(JSON.stringify(sanitizeUser(user)));
+    return JSON.stringify({ authToken, user: sanitizedUser });
 }

@@ -25,6 +25,8 @@ public class AuthController : MenuControlsBase
     [SerializeField]
     private string apiServerRoot = "https://ideal-journey.herokuapp.com/";
 
+    public static LoginResponse CurrentAuthToken { get; set; }
+
     private void Awake()
     {
         if (btnLogIn == null) btnLogIn = GetComponent<Button>();
@@ -63,8 +65,9 @@ public class AuthController : MenuControlsBase
             else
             {
                 var jwt = request.downloadHandler.text;
-                Debug.Log(jwt);
-                //TODO: persist JWT
+                var loginResponse = JsonUtility.FromJson<LoginResponse>(jwt);
+                PersistToDeviceHelper.SetCurrentLogin(loginResponse);
+                CurrentAuthToken = loginResponse;
                 loggedIn = true;
             }
         }

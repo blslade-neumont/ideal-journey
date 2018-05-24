@@ -37,10 +37,10 @@ export function initializeRoutesAndListen(port: number): Promise<Server> {
             let password: string = req.body.password;
             try {
                 let authToken = await loginAsUser(username, password);
-                res.status(200).send({ token: authToken, error: null });
+                res.status(200).send(authToken);
             }
             catch (e) {
-                res.status(403).json({ token: null, error: 'Failed to log in' });
+                res.status(403).json({ authToken: null, error: 'Failed to log in' });
             }
         });
         

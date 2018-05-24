@@ -45,6 +45,19 @@ public static class PersistToDeviceHelper
         return GetBooleanFromPlayerPrefs(Keys.BACKGROUND_MUSIC_OPTION);
     }
 
+    public static LoginResponse GetCurrentLogin()
+    {
+        var loginResponseStr = PlayerPrefs.GetString(Keys.AUTH_TOKEN);
+        if (loginResponseStr == null || string.IsNullOrEmpty(loginResponseStr.Trim())) return null;
+        return JsonUtility.FromJson<LoginResponse>(loginResponseStr);
+    }
+
+    public static void SetCurrentLogin(LoginResponse loginResponse)
+    {
+        var loginResponseStr = JsonUtility.ToJson(loginResponse);
+        PlayerPrefs.SetString(Keys.AUTH_TOKEN, loginResponseStr);
+    }
+
     private static void SaveBooleanToPlayerPrefs(string key, bool value)
     {
         PlayerPrefs.SetString(key, value ? "true" : "false");
