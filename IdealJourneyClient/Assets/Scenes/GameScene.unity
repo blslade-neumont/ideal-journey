@@ -710,6 +710,7 @@ MonoBehaviour:
   m_maxPitch: 1.5
   m_minUVSpeed: 0.1
   m_maxUVSpeed: 1
+  m_youLoseSFX: {fileID: 1590459201}
 --- !u!114 &1159650282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1027,6 +1028,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_gameController: {fileID: 1159650281}
+--- !u!82 &1590459201 stripped
+AudioSource:
+  m_PrefabParentObject: {fileID: 82952584169959780, guid: a8397a705e00956479d32c2e8d80c15a,
+    type: 2}
+  m_PrefabInternal: {fileID: 103274117}
 --- !u!1 &1591306895
 GameObject:
   m_ObjectHideFlags: 0
