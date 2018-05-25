@@ -57,6 +57,7 @@ public class SceneMover : MenuControlsBase
     {
         KeepTitleMusic();
         PersistBackground();
+        PersistToDeviceHelper.SetCurrentLogin(null);
         StartCoroutine(LoadDelayed(SceneNames.LOGIN));
     }
 

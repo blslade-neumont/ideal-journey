@@ -54,7 +54,7 @@ public static class PersistToDeviceHelper
 
     public static void SetCurrentLogin(LoginResponse loginResponse)
     {
-        var loginResponseStr = JsonUtility.ToJson(loginResponse);
+        var loginResponseStr = loginResponse == null ? "" : JsonUtility.ToJson(loginResponse);
         PlayerPrefs.SetString(Keys.AUTH_TOKEN, loginResponseStr);
     }
 
