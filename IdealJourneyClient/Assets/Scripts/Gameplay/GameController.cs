@@ -206,7 +206,7 @@ public class GameController : MonoBehaviour
     private void Update ()
     {
         m_timer.TickTimer(Time.deltaTime);
-        if (IsWaitingForAction && ActionIsComplete())
+        if (!DidFail && IsWaitingForAction && ActionIsComplete())
         {
             OnActionCompletedSuccessfully();
         }
