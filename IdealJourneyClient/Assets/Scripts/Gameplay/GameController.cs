@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
     private MyUVScroll m_uvScroll;
 
     public bool IsWaitingForAction { get; private set; }
+    public bool DidFail { get; private set; }
     public int CompletedActions { get; private set; }
     private float CurrentLerpValue
     {
@@ -132,6 +133,7 @@ public class GameController : MonoBehaviour
 
     private void OnOutOfActionTime()
     {
+        DidFail = true;
         EndGame();
     }
 

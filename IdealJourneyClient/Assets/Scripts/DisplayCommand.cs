@@ -16,8 +16,9 @@ public class DisplayCommand : MonoBehaviour
 
     private void Update()
     {
-        m_text.text = m_gameController.IsWaitingForAction
+        m_text.text = m_gameController.DidFail ? "You lose!"
+                    : (m_gameController.IsWaitingForAction
                     ? m_gameController.CurrentCommand.AsText()
-                    : "Wait for it...";
+                    : "Wait for it...");
     }
 }
