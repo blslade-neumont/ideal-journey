@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
     [SerializeField] [Range(0.0f, 3.0f)] private float m_maxPitch = 1.5f;
     [SerializeField] [Range(0.0f, 3.0f)] private float m_minUVSpeed = 0.1f;
     [SerializeField] [Range(0.0f, 3.0f)] private float m_maxUVSpeed = 0.5f;
+    [SerializeField] private AudioSource m_youLoseSFX;
 
     private const int MAX_COMMAND_LOG_LENGTH = 5;
     private GameCommand[] m_commands;
@@ -95,6 +96,7 @@ public class GameController : MonoBehaviour
             GameObject.FindGameObjectWithTag(Tags.FLIP_SFX).GetComponent<AudioSource>(),
             GameObject.FindGameObjectWithTag(Tags.SWIPE_SFX).GetComponent<AudioSource>(),
             GameObject.FindGameObjectWithTag(Tags.TAP_SFX).GetComponent<AudioSource>(),
+            m_youLoseSFX,
             m_successSFX
         };
     }
@@ -134,6 +136,7 @@ public class GameController : MonoBehaviour
     private void OnOutOfActionTime()
     {
         DidFail = true;
+        AudioHelper.PlayVoice(m_youLoseSFX);
         EndGame();
     }
 

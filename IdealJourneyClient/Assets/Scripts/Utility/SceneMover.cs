@@ -17,7 +17,7 @@ public class SceneMover : MenuControlsBase
     {
         DontKeepTitleMusic();
         PersistBackground();
-        StartCoroutine(LoadDelayed(SceneNames.END));
+        StartCoroutine(LoadDelayed(SceneNames.END, 1.25f));
     }
 
     public void MoveToOptions()
@@ -63,6 +63,6 @@ public class SceneMover : MenuControlsBase
     private IEnumerator QuitDelayed()
     {
         Debug.Log("Quitting");
-        return InvokeDelayed(() => Application.Quit());
+        return InvokeDelayed(0.25f, () => Application.Quit());
     }
 }

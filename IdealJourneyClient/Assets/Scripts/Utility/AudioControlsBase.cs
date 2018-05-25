@@ -7,15 +7,13 @@ using UnityEngine.UI;
 
 public class MenuControlsBase : MonoBehaviour
 {
-    private WaitForSeconds wait = new WaitForSeconds(0.25f);
-
-    protected IEnumerator LoadDelayed(string name)
+    protected IEnumerator LoadDelayed(string name, float timeToWait = 0.25f)
     {
-        return InvokeDelayed(() => SceneManager.LoadScene(name));
+        return InvokeDelayed(timeToWait, () => SceneManager.LoadScene(name));
     }
-    protected IEnumerator InvokeDelayed(Action act)
+    protected IEnumerator InvokeDelayed(float timeToWait, Action act)
     {
-        yield return wait;
+        yield return new WaitForSeconds(timeToWait);
         act();
     }
 
