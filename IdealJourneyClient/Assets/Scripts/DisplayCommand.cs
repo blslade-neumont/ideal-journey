@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Text))]
 public class DisplayCommand : MonoBehaviour
 {
-    [SerializeField] GameController m_gameController;
+    [SerializeField] private GameController m_gameController;
     private Text m_text;
 
     private void Awake()

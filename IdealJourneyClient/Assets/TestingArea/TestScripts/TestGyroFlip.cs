@@ -12,15 +12,15 @@ public class TestGyroFlip : MonoBehaviour {
     private Vector3 m_target;
     [SerializeField, Range(0, 90)] private float m_tolerance;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    private void Start () {
         m_gyro = Input.gyro;
         m_gyro.enabled = true;
         m_listen = false;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    private void Update () {
         if (m_listen)
         {
             Vector3 currentForward = (m_gyro.attitude * Vector3.forward).normalized;

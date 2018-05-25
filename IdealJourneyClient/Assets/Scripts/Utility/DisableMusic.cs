@@ -22,14 +22,14 @@ public class DisableMusic : MonoBehaviour
         }
     }
 
-    void Awake()
+    private void Awake()
     {
         myToggle = GetComponent<Toggle>();
         AudioHelper.BGMEnabled = PersistToDeviceHelper.IsBackgroundMusicSavedOn();
         myToggle.isOn = AudioHelper.BGMEnabled;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         AudioHelper.BGMEnabled = myToggle.isOn;
         PersistToDeviceHelper.SaveBackgroundMusicOption(AudioHelper.BGMEnabled);

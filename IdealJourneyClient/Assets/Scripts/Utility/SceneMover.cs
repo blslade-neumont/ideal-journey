@@ -57,7 +57,7 @@ public class SceneMover : MenuControlsBase
     {
         KeepTitleMusic();
         PersistBackground();
-        StartCoroutine(LoadDelayed(SceneNames.AUTH));
+        StartCoroutine(LoadDelayed(SceneNames.LOGIN));
     }
 
     private IEnumerator QuitDelayed()

@@ -8,14 +8,14 @@ public class DisableVibration : MonoBehaviour
 {
     private Toggle myToggle = null;
 
-    void Awake()
+    private void Awake()
     {
         myToggle = GetComponent<Toggle>();
         VibrateHelper.VibrateEnabled = PersistToDeviceHelper.IsVibrationSavedOn();
         myToggle.isOn = VibrateHelper.VibrateEnabled;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         VibrateHelper.VibrateEnabled = myToggle.isOn;
         PersistToDeviceHelper.SaveVibrationOption(VibrateHelper.VibrateEnabled);

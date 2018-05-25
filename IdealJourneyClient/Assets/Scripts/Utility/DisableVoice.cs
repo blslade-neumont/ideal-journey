@@ -8,14 +8,14 @@ public class DisableVoice : MonoBehaviour
 {
     private Toggle myToggle = null;
 
-    void Awake()
+    private void Awake()
     {
         myToggle = GetComponent<Toggle>();
         AudioHelper.VoiceEnabled = PersistToDeviceHelper.IsVoiceSavedOn();
         myToggle.isOn = AudioHelper.VoiceEnabled;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         AudioHelper.VoiceEnabled = myToggle.isOn;
         PersistToDeviceHelper.SaveVoiceOption(AudioHelper.VoiceEnabled);

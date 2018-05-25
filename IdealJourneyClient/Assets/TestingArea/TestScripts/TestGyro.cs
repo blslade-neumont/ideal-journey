@@ -6,8 +6,8 @@ public class TestGyro : MonoBehaviour {
 
     private Gyroscope m_gyro;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    private void Start () {
         m_gyro = Input.gyro;
         m_gyro.enabled = true;
         Screen.autorotateToLandscapeLeft = false;
@@ -16,9 +16,9 @@ public class TestGyro : MonoBehaviour {
         Screen.autorotateToPortrait = true;
         Screen.orientation = ScreenOrientation.AutoRotation;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    private void Update () {
         m_gyro = Input.gyro;
         transform.rotation = m_gyro.attitude;
 

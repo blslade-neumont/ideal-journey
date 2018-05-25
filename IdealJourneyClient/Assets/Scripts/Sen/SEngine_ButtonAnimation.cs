@@ -15,8 +15,8 @@ public class SEngine_ButtonAnimation : MonoBehaviour {
     private float m_timer;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    private void Start () {
 
         m_timer = m_startDelay;
 
@@ -27,9 +27,10 @@ public class SEngine_ButtonAnimation : MonoBehaviour {
         transform.position = new Vector3(700, m_position.y, m_position.z);
     }
 
-    bool firstActiveFrame = true;
-	// Update is called once per frame
-	void Update () {
+    private bool firstActiveFrame = true;
+
+    // Update is called once per frame
+    private void Update () {
         if(m_timer > 0)
         {
             m_timer -= Time.deltaTime;

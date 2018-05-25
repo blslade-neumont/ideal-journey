@@ -25,11 +25,10 @@ public abstract class SEngine_State<T>
 
 public class SEngine_StackStateMachine<T>
 {
-    Dictionary<string, SEngine_State<T>> m_states = new Dictionary<string, SEngine_State<T>>();
-
-    Stack<SEngine_State<T>> m_stateStack = new Stack<SEngine_State<T>>();
-    SEngine_State<T> m_lastState = null;
-    SEngine_State<T> m_state = null;
+    private Dictionary<string, SEngine_State<T>> m_states = new Dictionary<string, SEngine_State<T>>();
+    private Stack<SEngine_State<T>> m_stateStack = new Stack<SEngine_State<T>>();
+    private SEngine_State<T> m_lastState = null;
+    private SEngine_State<T> m_state = null;
 
     public void Update()
     {

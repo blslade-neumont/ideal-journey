@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LockOrientation : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    private void Start () {
         Gyroscope gyro = Input.gyro;
         gyro.enabled = true;
         Screen.autorotateToLandscapeLeft = false;

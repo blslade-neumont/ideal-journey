@@ -40,7 +40,7 @@ public class SEngine_Transition : MonoBehaviour {
     // Private Sibling Components
     private AudioSource m_audioSource = null;
 
-    void Start()
+    private void Start()
     {
         m_audioSource = GetComponent<AudioSource>();
 
@@ -72,7 +72,7 @@ public class SEngine_Transition : MonoBehaviour {
         StartCoroutine(TransitionRoutine());
     }
 
-    IEnumerator TransitionRoutine()
+    private IEnumerator TransitionRoutine()
     {
         if (!m_audioSource.isPlaying)
         {

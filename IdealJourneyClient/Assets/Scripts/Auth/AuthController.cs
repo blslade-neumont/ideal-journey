@@ -22,9 +22,6 @@ public class AuthController : MenuControlsBase
     [SerializeField]
     private Text errorText;
 
-    [SerializeField]
-    private string apiServerRoot = "https://ideal-journey.herokuapp.com/";
-
     public static LoginResponse CurrentAuthToken { get; set; }
 
     private void Awake()
@@ -42,7 +39,7 @@ public class AuthController : MenuControlsBase
 
     public void Register()
     {
-        Application.OpenURL(apiServerRoot + "register");
+        Application.OpenURL(AuthConfig.ApiServerRoot + "register");
     }
 
     public IEnumerator TryLogIn(string username, string password)
@@ -55,7 +52,7 @@ public class AuthController : MenuControlsBase
         var formFields = new Dictionary<string, string>();
         formFields.Add("username", username);
         formFields.Add("password", password);
-        using (var request = UnityWebRequest.Post(apiServerRoot + "login", formFields))
+        using (var request = UnityWebRequest.Post(AuthConfig.ApiServerRoot + "login", formFields))
         {
             yield return request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
@@ -87,6 +84,7 @@ public class AuthController : MenuControlsBase
     public void MoveToTitle()
     {
         KeepTitleMusic();
+        PersistBackground();
         StartCoroutine(LoadDelayed(SceneNames.TITLE));
     }
 }

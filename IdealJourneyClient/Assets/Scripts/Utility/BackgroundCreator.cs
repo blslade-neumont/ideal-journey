@@ -7,7 +7,7 @@ public class BackgroundCreator : MonoBehaviour
 {
     [SerializeField] private GameObject m_backgroundObject;
 
-    void Start()
+    private void Start()
     {
         GameObject backgroundObject = GameObject.FindGameObjectWithTag(Tags.BACKGROUND_OBJECT);
         if (backgroundObject == null)

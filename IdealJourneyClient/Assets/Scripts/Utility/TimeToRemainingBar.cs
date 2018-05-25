@@ -16,7 +16,7 @@ public class TimeToRemainingBar : MonoBehaviour {
         m_image = GetComponent<Image>();
     }
 
-    void Update()
+    private void Update()
     {
         if (!m_gameController.DidFail)
         {

@@ -10,6 +10,7 @@ import { allowAllOrigins } from './util/allow-all-origins';
 import { parseUser } from './util/parse-user';
 import { registerUser } from './util/register-user';
 import { loginAsUser } from './util/login-as-user';
+import { verifyAuthToken } from './util/verify-auth-token';
 import path = require('path');
 
 export function initializeRoutesAndListen(port: number): Promise<Server> {
@@ -32,15 +33,30 @@ export function initializeRoutesAndListen(port: number): Promise<Server> {
             res.status(200).render('index', { title: 'Homepage' });
         });
         
+        app.post('/poke', async (req: Request, res: Response) => {
+            res.status(200).send("I'm awake, I'm awake!");
+        });
+        
         app.post('/login', async (req: Request, res: Response) => {
             let username: string = req.body.username;
             let password: string = req.body.password;
             try {
-                let authToken = await loginAsUser(username, password);
-                res.status(200).send(authToken);
+                let loginResponse = await loginAsUser(username, password);
+                res.status(200).send(loginResponse);
             }
             catch (e) {
                 res.status(403).json({ authToken: null, error: 'Failed to log in' });
+            }
+        });
+        
+        app.post('/verify-token', async (req: Request, res: Response) => {
+            let authToken: string = req.body.authToken;
+            try {
+                let loginResponse = await verifyAuthToken(authToken);
+                res.status(200).send(loginResponse);
+            }
+            catch (e) {
+                res.status(403).json({ authToken: null, error: 'Failed to verify auth token.' });
             }
         });
         

@@ -8,14 +8,14 @@ public class DisableSFX : MonoBehaviour
 {
     private Toggle myToggle = null;
 
-    void Awake()
+    private void Awake()
     {
         myToggle = GetComponent<Toggle>();
         AudioHelper.SFXEnabled = PersistToDeviceHelper.IsSFXSavedOn();
         myToggle.isOn = AudioHelper.SFXEnabled;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         AudioHelper.SFXEnabled = myToggle.isOn;
         PersistToDeviceHelper.SaveSFXOption(AudioHelper.SFXEnabled);

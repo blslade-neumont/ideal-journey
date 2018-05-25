@@ -13,7 +13,7 @@ public class TestAccel : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    private void Update () {
         m_text.text = Input.gyro.userAcceleration.ToString();
     }
 }

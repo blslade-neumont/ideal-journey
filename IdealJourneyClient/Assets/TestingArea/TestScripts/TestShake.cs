@@ -4,25 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TestShake : MonoBehaviour {
-
-    bool m_listen;
+    private bool m_listen;
     [SerializeField] private Text m_text;
+    private float accelerometerUpdateInterval = 1.0f / 60.0f;
+    private float lowPassKernelWidthInSeconds = 1.0f;
+    private float shakeDetectionThreshold = 3.0f;
+    private float lowPassFilterFactor;
+    private Vector3 lowPassValue;
 
-    float accelerometerUpdateInterval = 1.0f / 60.0f;
-    float lowPassKernelWidthInSeconds = 1.0f;
-    float shakeDetectionThreshold = 3.0f;
-
-    float lowPassFilterFactor;
-    Vector3 lowPassValue;
-
-    void Start()
+    private void Start()
     {
         lowPassFilterFactor = accelerometerUpdateInterval / lowPassKernelWidthInSeconds;
         shakeDetectionThreshold *= shakeDetectionThreshold;
         lowPassValue = Input.gyro.userAcceleration;
     }
 
-    void Update()
+    private void Update()
     {
         if (m_listen)
         {

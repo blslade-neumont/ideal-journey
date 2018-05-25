@@ -13,13 +13,13 @@ public class SEngine_Tap : MonoBehaviour
 	private Vector3 m_RotationDirection = Vector3.up;
 
     // Use this for initialization
-    void Awake()
+    private void Awake()
     {
 
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         transform.Rotate(m_RotationDirection * Time.deltaTime * m_speed);
     }
