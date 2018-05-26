@@ -2,64 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
-public class AuthPreloader : MenuControlsBase
+[RequireComponent(typeof(Text))]
+public class CurrentUsernameText : MonoBehaviour
 {
-    private void Start()
+    private Text m_text;
+
+    private void Awake()
     {
-        StartCoroutine(Preload());
+        m_text = GetComponent<Text>();
     }
 
-    private IEnumerator Preload()
+    private void Update()
     {
-        bool loggedIn = false;
-        var currentLogin = PersistToDeviceHelper.GetCurrentLogin();
-        if (currentLogin != null)
-        {
-            var formFields = new Dictionary<string, string>();
-            formFields.Add("authToken", currentLogin.authToken);
-            using (var request = UnityWebRequest.Post(AuthConfig.ApiServerRoot + "verify-token", formFields))
-            {
-                yield return request.SendWebRequest();
-                if (request.isNetworkError || request.isHttpError)
-                {
-                    Debug.Log(request.error);
-                }
-                else
-                {
-                    var jwt = request.downloadHandler.text;
-                    var loginResponse = JsonUtility.FromJson<LoginResponse>(jwt);
-                    PersistToDeviceHelper.SetCurrentLogin(loginResponse);
-                    AuthController.CurrentAuthToken = loginResponse;
-                    loggedIn = true;
-                }
-            }
-        }
-
-        if (!loggedIn)
-        {
-            //Fire and forget
-            UnityWebRequest.Post(AuthConfig.ApiServerRoot + "poke", new Dictionary<string, string>()).SendWebRequest();
-
-            //Navigate to login screen
-            MoveToLoginScreen();
-            yield break;
-        }
-
-        MoveToTitle();
-    }
-
-    public void MoveToLoginScreen()
-    {
-        KeepTitleMusic();
-        PersistBackground();
-        StartCoroutine(LoadDelayed(SceneNames.LOGIN));
-    }
-
-    public void MoveToTitle()
-    {
-        KeepTitleMusic();
-        PersistBackground();
-        StartCoroutine(LoadDelayed(SceneNames.TITLE));
+        if (AuthController.CurrentAuthToken == null || AuthController.CurrentAuthToken.user == null) m_text.text = "(Not logged in)";
+        else m_text.text = AuthController.CurrentAuthToken.user.username;
     }
 }

@@ -77,9 +77,9 @@ export function initializeRoutesAndListen(port: number): Promise<Server> {
         });
         
         app.get('/api/highscores', async (req: Request, res: Response) => {
-            let topUsers = await Users.find().sort('bestScore', -1).limit(10).toArray();
+            let topUsers = await Users.find().sort('bestScore', -1).limit(5).toArray();
             let topScores = topUsers.map(user => ({ username: user.username, bestScore: user.bestScore }));
-            res.status(200).json(topScores);
+            res.status(200).json({ highscores: topScores });
         });
         
         const server = app.listen(port, (err: any, result: any) => {
