@@ -22,6 +22,9 @@ public class AuthController : MenuControlsBase
     [SerializeField]
     private Text errorText;
 
+    [SerializeField]
+    private GameObject loadingIcon;
+
     public static LoginResponse CurrentAuthToken { get; set; }
 
     private void Awake()
@@ -33,7 +36,7 @@ public class AuthController : MenuControlsBase
     {
         var username = txtUsername.text;
         var password = txtPassword.text;
-
+        errorText.text = "";
         StartCoroutine(TryLogIn(username, password));
     }
 
@@ -75,6 +78,7 @@ public class AuthController : MenuControlsBase
             txtUsername.enabled = true;
             txtPassword.enabled = true;
             btnLogIn.enabled = true;
+            loadingIcon.SetActive(false);
             yield break;
         }
         

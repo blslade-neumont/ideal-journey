@@ -17,9 +17,16 @@ public class LoadAnimation : MonoBehaviour {
         m_icon.fillClockwise = true;
         m_icon.fillAmount = 0;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnDisable()
+    {
+        transform.rotation = Quaternion.identity;
+        m_icon.fillClockwise = true;
+        m_icon.fillAmount = 0;
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (m_icon.fillClockwise && m_icon.fillAmount == 1)
         {
             m_icon.fillClockwise = false;
