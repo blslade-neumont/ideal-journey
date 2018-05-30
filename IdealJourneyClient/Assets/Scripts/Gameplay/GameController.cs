@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour
     public bool IsWaitingForAction { get; private set; }
     public bool DidFail { get; private set; }
     public int CompletedActions { get; private set; }
+
+    public static int LastScore;
     private float CurrentLerpValue
     {
         get
@@ -136,6 +138,7 @@ public class GameController : MonoBehaviour
     private void OnOutOfActionTime()
     {
         DidFail = true;
+        LastScore = CompletedActions;
         AudioHelper.PlayVoice(m_youLoseSFX);
         EndGame();
     }
