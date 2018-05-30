@@ -38,6 +38,7 @@ public class GameController : MonoBehaviour
     private SceneMover m_sceneMover;
     private AudioSource m_successSFX;
     private MyUVScroll m_uvScroll;
+    private ParticleSystem m_milestoneParticles;
 
     public bool IsWaitingForAction { get; private set; }
     public bool DidFail { get; private set; }
@@ -83,9 +84,15 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        GrabMilestoneObjects();
         GrabSourcesToScale(); // Needs to be in start so it can grab instantiated on awake audio sources
         GrabUVScroll(); // needs to be in start because also instantiated
         ScaleWithSpeed();
+    }
+
+    private void GrabMilestoneObjects()
+    {
+        m_milestoneParticles = GameObject.FindGameObjectWithTag(Tags.MILESTONE_PARTICLES).GetComponent<ParticleSystem>();
     }
 
     private void GrabUVScroll()
@@ -245,6 +252,8 @@ public class GameController : MonoBehaviour
 
     private void NotifyMilestoneSuccessToUser()
     {
+        m_milestoneParticles.gameObject.SetActive(true);
+        m_milestoneParticles.Play();
         m_milestoneText.Begin(m_milestoneTime, m_milestones[m_nextMilestone] + "!");
     }
 
