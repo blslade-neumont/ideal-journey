@@ -22,6 +22,9 @@ public class GameController : MonoBehaviour
     [SerializeField] [Range(0.0f, 3.0f)] private float m_minUVSpeed = 0.1f;
     [SerializeField] [Range(0.0f, 3.0f)] private float m_maxUVSpeed = 0.5f;
     [SerializeField] private AudioSource m_youLoseSFX;
+    [SerializeField] private int[] m_milestones = new int[0];
+    [SerializeField] private MilestoneText m_milestoneText;
+    [SerializeField] private float m_milestoneTime = 1.0f;
 
     private const int MAX_COMMAND_LOG_LENGTH = 5;
     private GameCommand[] m_commands;
@@ -30,6 +33,7 @@ public class GameController : MonoBehaviour
     private int           m_currentCommandIndex = -1;
     private System.Random m_randGen = new System.Random();
     private AudioSource[] m_sourcesToScale;
+    private int m_nextMilestone = 0;
 
     private SceneMover m_sceneMover;
     private AudioSource m_successSFX;
@@ -40,6 +44,7 @@ public class GameController : MonoBehaviour
     public int CompletedActions { get; private set; }
 
     public static int LastScore;
+
     private float CurrentLerpValue
     {
         get
@@ -219,8 +224,35 @@ public class GameController : MonoBehaviour
     {
         ++CompletedActions;
         m_lastCompletedAtPercent = m_timer.TimeRemaining / m_timer.CycleTime;
+        HandleMilestones();
         NotifySuccessToUser();
         BeginBreak();
+    }
+
+    private void HandleMilestones()
+    {
+        if (HasAchievedMilestone())
+        {
+            CompleteMilestone();
+        }
+    }
+
+    private void CompleteMilestone()
+    {
+        NotifyMilestoneSuccessToUser();
+        ++m_nextMilestone;
+    }
+
+    private void NotifyMilestoneSuccessToUser()
+    {
+        m_milestoneText.Begin(m_milestoneTime, m_milestones[m_nextMilestone] + "!");
+    }
+
+    private bool HasAchievedMilestone()
+    {
+        if (m_nextMilestone >= m_milestones.Length) { return false; } // no milestones left to achieve
+
+        return CompletedActions >= m_milestones[m_nextMilestone];
     }
 
     private void NotifySuccessToUser()
