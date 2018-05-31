@@ -16,7 +16,7 @@ export async function parseUser(req: Request, res: Response, next: NextFunction)
         if (typeof authToken === 'string' && authToken) {
             let user = parseAuthToken(authToken);
             if (!user) return;
-            user = await Users.findOne({ _id: user._id });
+            user = await Users.findOne({ username: user.username });
             (<any>req).jwt = user;
         }
     }

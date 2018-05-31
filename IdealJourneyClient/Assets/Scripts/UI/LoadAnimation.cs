@@ -4,29 +4,33 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-
-public class LoadAnimation : MonoBehaviour {
-
+public class LoadAnimation : MonoBehaviour
+{
     private Image m_icon;
     [SerializeField, Range(0, 2)] private float m_fadeSpeed;
     [SerializeField, Range(0, 300)] private float m_spinSpeed;
 
-	// Use this for initialization
-	void Start () {
-        m_icon = GetComponent<Image>();
-        m_icon.fillClockwise = true;
-        m_icon.fillAmount = 0;
-	}
-
-    private void OnDisable()
+    // Use this for initialization
+    void Start()
     {
-        transform.rotation = Quaternion.identity;
+        m_icon = GetComponent<Image>();
         m_icon.fillClockwise = true;
         m_icon.fillAmount = 0;
     }
 
+    private void OnDisable()
+    {
+        transform.rotation = Quaternion.identity;
+        if (m_icon != null)
+        {
+            m_icon.fillClockwise = true;
+            m_icon.fillAmount = 0;
+        }
+    }
+
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         if (m_icon.fillClockwise && m_icon.fillAmount == 1)
         {
             m_icon.fillClockwise = false;

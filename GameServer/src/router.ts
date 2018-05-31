@@ -2,7 +2,7 @@ import * as express from 'express';
 import { Request, Response } from 'express';
 import { Server } from 'http';
 import { config } from './config';
-import { User, createAuthToken, Users } from './models/user';
+import { User, createAuthToken, Users, sanitizeUser } from './models/user';
 import { wrapPromise } from './util/wrap-promise';
 import cookieParser = require('cookie-parser');
 import bodyParser = require('body-parser')
@@ -80,6 +80,35 @@ export function initializeRoutesAndListen(port: number): Promise<Server> {
             let topUsers = await Users.find().sort('bestScore', -1).limit(5).toArray();
             let topScores = topUsers.map(user => ({ username: user.username, bestScore: user.bestScore }));
             res.status(200).json({ highscores: topScores });
+        });
+        
+        app.get('/api/update-highscore', parseUser, async (req: Request, res: Response) => {
+            let originalUser: Partial<User> = (<any>req).jwt;
+            if (!originalUser) {
+                res.status(403).send(`You aren't logged in, so you can't update your highscore!`);
+                return;
+            }
+            
+            let score = req.query['score'];
+            if (!score || `${+score}` !== score) {
+                res.status(423).send(`You must provide a score to update your score`);
+                return;
+            }
+            score = +score;
+            
+            let findBy: Partial<User> = {
+                username: originalUser.username
+            };
+            await Users.updateOne(findBy, {
+                $set: {
+                    bestScore: score
+                }
+            });
+            let user = await Users.findOne(findBy);
+            
+            let authToken = createAuthToken(user!);
+            let sanitizedUser = JSON.parse(JSON.stringify(sanitizeUser(user!)));
+            res.status(200).send(JSON.stringify({ authToken, user: sanitizedUser }));
         });
         
         const server = app.listen(port, (err: any, result: any) => {
