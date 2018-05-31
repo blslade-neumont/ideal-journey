@@ -34,6 +34,7 @@ public class GameController : MonoBehaviour
     private System.Random m_randGen = new System.Random();
     private AudioSource[] m_sourcesToScale;
     private int m_nextMilestone = 0;
+    private ParticleSystem m_milestoneParticles;
 
     private SceneMover m_sceneMover;
     private AudioSource m_successSFX;
@@ -72,15 +73,7 @@ public class GameController : MonoBehaviour
         get { return m_timer.TimeRemaining; }
     }
 
-    private ParticleSystem m_cachedMilestoneParticles;
-    private ParticleSystem MilestoneParticles
-    {
-        get
-        {
-            if (m_cachedMilestoneParticles == null) { m_cachedMilestoneParticles = GameObject.FindGameObjectWithTag(Tags.MILESTONE_PARTICLES).GetComponent<ParticleSystem>(); }
-            return m_cachedMilestoneParticles;
-        }
-    }
+
 
     private MyUVScroll m_cachedUVScroll;
     private MyUVScroll UVScroll
@@ -103,9 +96,14 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         GrabSourcesToScale(); // Needs to be in start so it can grab instantiated on awake audio sources
+        GetMilestoneParticles();
         InitAudioSpeeds();
     }
 
+    private void GetMilestoneParticles()
+    {
+        m_milestoneParticles = GameObject.FindGameObjectWithTag(Tags.MILESTONE_PARTICLES).GetComponent<ParticleSystem>();
+    }
     private void InitUVSpeed()
     {
         UVScroll.uvAnimationRate.x = m_minUVSpeed;
@@ -271,8 +269,8 @@ public class GameController : MonoBehaviour
 
     private void NotifyMilestoneSuccessToUser()
     {
-        MilestoneParticles.gameObject.SetActive(true);
-        MilestoneParticles.Play();
+        m_milestoneParticles.gameObject.SetActive(true);
+        m_milestoneParticles.Play();
         m_milestoneText.Begin(m_milestoneTime, m_milestones[m_nextMilestone] + "!");
     }
 

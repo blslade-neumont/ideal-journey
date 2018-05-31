@@ -51,5 +51,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e6ba966f83b54419a4d966097c6996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_backgroundObject: {fileID: 1589715293051916, guid: 1818266757bb8ba4f8f906a1ed3badac,
+  m_backgroundObject: {fileID: 1416501896037876, guid: 1818266757bb8ba4f8f906a1ed3badac,
     type: 2}
