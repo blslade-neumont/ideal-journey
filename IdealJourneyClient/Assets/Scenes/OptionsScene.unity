@@ -2537,8 +2537,8 @@ MonoBehaviour:
   m_countMax: 7
   m_text: {fileID: 782901681}
   m_fadeSpeed: 0.25
-  m_posMessage: Developer Mode Enabled!
-  m_negMessage: Developer Mode Disabled!
+  m_posMessage: Developer Mode Enabled! (jk)
+  m_negMessage: Developer Mode Disabled! (jk)
 --- !u!1 &1981282945
 GameObject:
   m_ObjectHideFlags: 0
