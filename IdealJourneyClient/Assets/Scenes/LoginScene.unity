@@ -124,6 +124,18 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 905087576}
   m_Script: {fileID: 575553740, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &240255765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 240255761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba6c9c9da7a2a14a8d79857ad47a51d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_password: {fileID: 255600530}
 --- !u!1001 &255600529
 Prefab:
   m_ObjectHideFlags: 0
@@ -711,7 +723,7 @@ Prefab:
     - target: {fileID: 114623699454396080, guid: 8a53abc3833f1f24790da9c91c36996c,
         type: 2}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114623699454396080, guid: 8a53abc3833f1f24790da9c91c36996c,
         type: 2}
@@ -722,22 +734,22 @@ Prefab:
         type: 2}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1797206673}
+      objectReference: {fileID: 240255765}
     - target: {fileID: 114623699454396080, guid: 8a53abc3833f1f24790da9c91c36996c,
         type: 2}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetSelectedGameObject
+      value: ToPassword
       objectReference: {fileID: 0}
     - target: {fileID: 114623699454396080, guid: 8a53abc3833f1f24790da9c91c36996c,
         type: 2}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 114623699454396080, guid: 8a53abc3833f1f24790da9c91c36996c,
         type: 2}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 255600530}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8a53abc3833f1f24790da9c91c36996c, type: 2}
   m_IsPrefabParent: 0
