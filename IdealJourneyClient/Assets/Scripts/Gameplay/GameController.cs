@@ -37,8 +37,6 @@ public class GameController : MonoBehaviour
 
     private SceneMover m_sceneMover;
     private AudioSource m_successSFX;
-    private MyUVScroll m_uvScroll;
-    private ParticleSystem m_milestoneParticles;
 
     public bool IsWaitingForAction { get; private set; }
     public bool DidFail { get; private set; }
@@ -74,6 +72,26 @@ public class GameController : MonoBehaviour
         get { return m_timer.TimeRemaining; }
     }
 
+    private ParticleSystem m_cachedMilestoneParticles;
+    private ParticleSystem MilestoneParticles
+    {
+        get
+        {
+            if (m_cachedMilestoneParticles == null) { m_cachedMilestoneParticles = GameObject.FindGameObjectWithTag(Tags.MILESTONE_PARTICLES).GetComponent<ParticleSystem>(); }
+            return m_cachedMilestoneParticles;
+        }
+    }
+
+    private MyUVScroll m_cachedUVScroll;
+    private MyUVScroll UVScroll
+    {
+        get
+        {
+            if (m_cachedUVScroll == null) { m_cachedUVScroll = GameObject.FindGameObjectWithTag(Tags.BACKGROUND_OBJECT).GetComponent<MyUVScroll>(); InitUVSpeed(); }
+            return m_cachedUVScroll;
+        }
+    }
+
     private void Awake ()
     {
         GetSiblingComponents();
@@ -84,20 +102,21 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        GrabMilestoneObjects();
         GrabSourcesToScale(); // Needs to be in start so it can grab instantiated on awake audio sources
-        GrabUVScroll(); // needs to be in start because also instantiated
-        ScaleWithSpeed();
+        InitAudioSpeeds();
     }
 
-    private void GrabMilestoneObjects()
+    private void InitUVSpeed()
     {
-        m_milestoneParticles = GameObject.FindGameObjectWithTag(Tags.MILESTONE_PARTICLES).GetComponent<ParticleSystem>();
+        UVScroll.uvAnimationRate.x = m_minUVSpeed;
     }
 
-    private void GrabUVScroll()
+    private void InitAudioSpeeds()
     {
-        m_uvScroll = GameObject.FindGameObjectWithTag(Tags.BACKGROUND_OBJECT).GetComponent<MyUVScroll>();
+        foreach (AudioSource audio in m_sourcesToScale)
+        {
+            audio.pitch = m_minPitch;
+        }
     }
 
     private void GrabSourcesToScale()
@@ -210,7 +229,7 @@ public class GameController : MonoBehaviour
 
     private void ScaleWithSpeed()
     {
-        m_uvScroll.uvAnimationRate.x = Mathf.Lerp(m_minUVSpeed, m_maxUVSpeed, CurrentLerpValue);
+        UVScroll.uvAnimationRate.x = Mathf.Lerp(m_minUVSpeed, m_maxUVSpeed, CurrentLerpValue);
         float newPitch = Mathf.Lerp(m_minPitch, m_maxPitch, CurrentLerpValue);
         foreach (AudioSource audio in m_sourcesToScale)
         {
@@ -252,8 +271,8 @@ public class GameController : MonoBehaviour
 
     private void NotifyMilestoneSuccessToUser()
     {
-        m_milestoneParticles.gameObject.SetActive(true);
-        m_milestoneParticles.Play();
+        MilestoneParticles.gameObject.SetActive(true);
+        MilestoneParticles.Play();
         m_milestoneText.Begin(m_milestoneTime, m_milestones[m_nextMilestone] + "!");
     }
 
