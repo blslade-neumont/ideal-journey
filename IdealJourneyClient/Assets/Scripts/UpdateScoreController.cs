@@ -19,13 +19,14 @@ public class UpdateScoreController : MonoBehaviour
     private void Awake()
     {
         var score = GameController.LastScore;
+        var bestScore = AuthController.CurrentAuthToken.user.bestScore;
         if (m_txtScore != null) m_txtScore.text = "" + score;
 
         m_txtNewHighScore = GetComponent<Text>();
 
-        if (AuthController.CurrentAuthToken == null || AuthController.CurrentAuthToken.user == null || score <= AuthController.CurrentAuthToken.user.bestScore)
+        if (AuthController.CurrentAuthToken == null || AuthController.CurrentAuthToken.user == null || score <= bestScore)
         {
-            m_txtNewHighScore.enabled = false;
+            m_txtNewHighScore.text = "Your best:\n" + bestScore;
             if (m_txtSendStatus != null) m_txtSendStatus.enabled = false;
             if (m_loadingSpinner != null) m_loadingSpinner.SetActive(false);
             return;
