@@ -7,12 +7,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Text))]
 public class UpdateScoreController : MonoBehaviour
 {
-    [SerializeField]
-    private Text m_txtScore;
-    [SerializeField]
-    private Text m_txtSendStatus;
-    [SerializeField]
-    private GameObject m_loadingSpinner;
+    [SerializeField] private Text m_txtScore;
+    [SerializeField] private Text m_txtSendStatus;
+    [SerializeField] private Text m_txtPersonalRank;
+    [SerializeField] private GameObject m_loadingSpinner;
 
     private Text m_txtNewHighScore;
 
@@ -27,10 +25,8 @@ public class UpdateScoreController : MonoBehaviour
         {
             if (AuthController.CurrentAuthToken == null || AuthController.CurrentAuthToken.user == null) { m_txtNewHighScore.enabled = false; }
             else { m_txtNewHighScore.text = "Your best:\n" + AuthController.CurrentAuthToken.user.bestScore; }
-        
 
-            if (m_txtSendStatus != null) m_txtSendStatus.enabled = false;
-            if (m_loadingSpinner != null) m_loadingSpinner.SetActive(false);
+            StartCoroutine(GetRank());
             return;
         }
 
@@ -78,5 +74,56 @@ public class UpdateScoreController : MonoBehaviour
         }
 
         if (m_txtSendStatus != null) m_txtSendStatus.enabled = false;
+        StartCoroutine(GetRank());
+    }
+
+    private IEnumerator GetRank()
+    {
+        var worked = false;
+        int rank = 0;
+
+        while (!worked)
+        {
+            if (m_txtSendStatus != null)
+            {
+                m_txtSendStatus.enabled = true;
+                m_txtSendStatus.text = "Getting Rank from Server...";
+            }
+            if (m_loadingSpinner != null) m_loadingSpinner.SetActive(true);
+
+            using (var request = UnityWebRequest.Get(AuthConfig.ApiServerRoot + "api/highscores"))
+            {
+                if (AuthController.CurrentAuthToken != null) request.SetRequestHeader("Authorization", "Bearer " + AuthController.CurrentAuthToken.authToken);
+                yield return request.SendWebRequest();
+                if (request.isNetworkError || request.isHttpError)
+                {
+                    Debug.Log(request.error);
+                    yield break;
+                }
+                else
+                {
+                    var value = request.downloadHandler.text;
+                    var response = JsonUtility.FromJson<HighscoresResponse>(value);
+                    rank = response.rank;
+                    worked = true;
+                }
+            }
+
+            if (m_loadingSpinner != null) m_loadingSpinner.SetActive(false);
+            if (!worked && m_txtSendStatus != null)
+            {
+                m_txtSendStatus.text = "Failed get rank from server.";
+                yield return new WaitForSeconds(15);
+            }
+        }
+
+        if (m_txtSendStatus != null) m_txtSendStatus.enabled = false;
+
+        if (this.m_txtPersonalRank != null && rank != 0)
+        {
+            this.m_txtPersonalRank.enabled = true;
+            this.m_txtPersonalRank.text = "Rank: " + rank;
+        }
+
     }
 }
