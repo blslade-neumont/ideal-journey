@@ -15,6 +15,8 @@ public class HighscoreController : MonoBehaviour
     private Text m_txtGlobalScores;
     [SerializeField]
     private Text m_txtPersonalScore;
+    [SerializeField]
+    private Text m_txtPersonalRank;
 
     private void Awake()
     {
@@ -35,10 +37,13 @@ public class HighscoreController : MonoBehaviour
         if (this.m_loadingSpinner != null) this.m_loadingSpinner.SetActive(true);
         if (this.m_txtGlobalUsernames != null) this.m_txtGlobalUsernames.enabled = false;
         if (this.m_txtGlobalScores != null) this.m_txtGlobalScores.enabled = false;
+        if (this.m_txtPersonalRank != null) this.m_txtPersonalRank.enabled = false;
 
         User[] globalHighscores;
+        int rank;
         using (var request = UnityWebRequest.Get(AuthConfig.ApiServerRoot + "api/highscores"))
         {
+            if (AuthController.CurrentAuthToken != null) request.SetRequestHeader("Authorization", "Bearer " + AuthController.CurrentAuthToken.authToken);
             yield return request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
@@ -50,6 +55,7 @@ public class HighscoreController : MonoBehaviour
                 var value = request.downloadHandler.text;
                 var response = JsonUtility.FromJson<HighscoresResponse>(value);
                 globalHighscores = response.highscores;
+                rank = response.rank;
             }
         }
         if (globalHighscores.Length > 5) globalHighscores = globalHighscores.Take(5).ToArray();
@@ -64,6 +70,11 @@ public class HighscoreController : MonoBehaviour
         {
             this.m_txtGlobalScores.enabled = true;
             this.m_txtGlobalScores.text = string.Join("\r\n", globalHighscores.Select(user => user.bestScore.ToString()).ToArray());
+        }
+        if (this.m_txtPersonalRank != null && rank != 0)
+        {
+            this.m_txtPersonalRank.enabled = true;
+            this.m_txtPersonalRank.text = "Rank: " + rank;
         }
     }
 }

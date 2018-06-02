@@ -7,4 +7,5 @@ using System.Text;
 public class HighscoresResponse
 {
     public User[] highscores;
+    public int rank;
 }

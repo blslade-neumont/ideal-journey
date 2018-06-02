@@ -76,10 +76,15 @@ export function initializeRoutesAndListen(port: number): Promise<Server> {
             }
         });
         
-        app.get('/api/highscores', async (req: Request, res: Response) => {
+        app.get('/api/highscores', parseUser, async (req: Request, res: Response) => {
             let topUsers = await Users.find().sort('bestScore', -1).limit(5).toArray();
             let topScores = topUsers.map(user => ({ username: user.username, bestScore: user.bestScore }));
-            res.status(200).json({ highscores: topScores });
+            let scores = { highscores: topScores };
+            let currentUser: User = (<any>req).jwt;
+            if (currentUser) {
+                (<any>scores).rank = (await Users.count({ bestScore: { $gt: currentUser.bestScore } })) + 1;
+            }
+            res.status(200).json(scores);
         });
         
         app.get('/api/update-highscore', parseUser, async (req: Request, res: Response) => {
