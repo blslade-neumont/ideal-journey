@@ -6,7 +6,7 @@ public class TurnCommand : GameCommand
 {
     private Gyroscope m_gyro;
     private Vector3 m_startUp;
-    private const float TOLERANCE = 45;
+    private const float TOLERANCE = 85;
 
     public override void Begin()
     {
@@ -17,7 +17,7 @@ public class TurnCommand : GameCommand
     public override bool IsComplete()
     {
         Vector3 currentUp = (m_gyro.attitude * Vector3.up).normalized;
-        return Vector3.Dot(currentUp, m_startUp) < 0 || base.IsComplete();
+        return Vector3.Angle(m_startUp, currentUp) >= TOLERANCE || base.IsComplete();
     }
 
     public override string AsText()
