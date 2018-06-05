@@ -393,6 +393,7 @@ GameObject:
   - component: {fileID: 523643261}
   - component: {fileID: 523643260}
   - component: {fileID: 523643262}
+  - component: {fileID: 523643263}
   m_Layer: 5
   m_Name: MilestoneText
   m_TagString: Untagged
@@ -430,7 +431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 1, a: 1}
+  m_Color: {r: 0.5764706, g: 0.4392157, b: 0.85882354, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -470,6 +471,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_minFont: 0
   m_maxFont: 144
+--- !u!114 &523643263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 523643258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &633032038
 Prefab:
   m_ObjectHideFlags: 0
