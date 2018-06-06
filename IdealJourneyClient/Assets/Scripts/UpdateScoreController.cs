@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -24,7 +25,7 @@ public class UpdateScoreController : MonoBehaviour
         if (AuthController.CurrentAuthToken == null || AuthController.CurrentAuthToken.user == null || score <= AuthController.CurrentAuthToken.user.bestScore)
         {
             if (AuthController.CurrentAuthToken == null || AuthController.CurrentAuthToken.user == null) { m_txtNewHighScore.enabled = false; }
-            else { m_txtNewHighScore.text = "Your best:\n" + AuthController.CurrentAuthToken.user.bestScore; }
+            else { m_txtNewHighScore.text = "Your best" + Environment.NewLine + AuthController.CurrentAuthToken.user.bestScore; }
 
             StartCoroutine(GetRank());
             return;
@@ -122,7 +123,7 @@ public class UpdateScoreController : MonoBehaviour
         if (this.m_txtPersonalRank != null && rank != 0)
         {
             this.m_txtPersonalRank.enabled = true;
-            this.m_txtPersonalRank.text = "Rank: " + rank;
+            this.m_txtPersonalRank.text = "Rank" + Environment.NewLine + rank;
         }
 
     }

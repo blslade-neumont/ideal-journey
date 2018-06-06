@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,6 @@ public class DisplayScore : MonoBehaviour
 
     private void Update()
     {
-        m_text.text = string.Concat("Score: ", m_gameController.CompletedActions);
+        m_text.text = string.Concat("Score", Environment.NewLine, m_gameController.CompletedActions);
     }
 }
